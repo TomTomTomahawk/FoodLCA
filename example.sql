@@ -1,8 +1,8 @@
 INSERT INTO recipes (name, draft)
-VALUES ('Burger', FALSE);
+VALUES ('Cheese Burger', FALSE);
 
 INSERT INTO recipes (name, draft)
-VALUES ('Cheese burger', FALSE);
+VALUES ('Burger', FALSE);
 
 SELECT id
 FROM recipes
