@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'note.dart';
+import 'ingredient_saver.dart';
 
 class Foodchoice extends StatelessWidget {
   @override
@@ -118,9 +118,9 @@ class Vegetables extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Note(
-                        NoteMode.Adding,
-                        {'title': 'vegetable 1', 'text': '123'},
+                  builder: (context) => SaveIngredient(
+                        IngredientMode.Adding,
+                        {'name': 'vegetable 1', 'recipe_id': '1'},
                       )));
         })
       ]),
@@ -140,9 +140,9 @@ class Meatandfish extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Note(
-                        NoteMode.Adding,
-                        {'title': 'meat 1', 'text': '123'},
+                  builder: (context) => SaveIngredient(
+                        IngredientMode.Adding,
+                        {'name': 'meat 1', 'recipe_id': '1'},
                       )));
         })
       ]),
@@ -162,9 +162,9 @@ class Fruit extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Note(
-                        NoteMode.Adding,
-                        {'title': 'fruit 1', 'text': '123'},
+                  builder: (context) => SaveIngredient(
+                        IngredientMode.Adding,
+                        {'name': 'fruit 1', 'recipe_id': '1'},
                       )));
         })
       ]),
@@ -184,9 +184,9 @@ class Dairy extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Note(
-                        NoteMode.Adding,
-                        {'title': 'dairy 1', 'text': '123'},
+                  builder: (context) => SaveIngredient(
+                        IngredientMode.Adding,
+                        {'name': 'dairy 1', 'recipe_id': '1'},
                       )));
         })
       ]),
@@ -206,9 +206,9 @@ class Cereals extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Note(
-                        NoteMode.Adding,
-                        {'title': 'cereal 1', 'text': '123'},
+                  builder: (context) => SaveIngredient(
+                        IngredientMode.Adding,
+                        {'name': 'cereal 1', 'recipe_id': '1'},
                       )));
         })
       ]),
@@ -228,9 +228,9 @@ class Others extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Note(
-                        NoteMode.Adding,
-                        {'title': 'other 1', 'text': '123'},
+                  builder: (context) => SaveIngredient(
+                        IngredientMode.Adding,
+                        {'name': 'other 1', 'recipe_id': '1'},
                       )));
         })
       ]),
