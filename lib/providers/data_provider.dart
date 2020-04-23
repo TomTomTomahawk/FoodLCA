@@ -96,6 +96,15 @@ class DataProvider {
     return await db.rawQuery('''SELECT * FROM Ingredients
     WHERE recipe_id =?''',[recipeid]);
   }
+//SELECT EXISTS(SELECT * FROM recipes WHERE draft = TRUE)
+  static Future getBuildMode() async {
+    if (db == null) {
+       await open();
+    }
+     //var result = await db.rawQuery('''SELECT SUM(id) FROM recipes;''');
+    var result = await db.rawQuery('''SELECT EXISTS(SELECT * FROM recipes WHERE draft = TRUE);''');
+    return result[0]["EXISTS(SELECT * FROM recipes WHERE draft = TRUE)"];
+  }
 
     static Future deleteRecipe(int id) async {
     await db.delete('Recipes', where: 'id = ?', whereArgs: [id]);
