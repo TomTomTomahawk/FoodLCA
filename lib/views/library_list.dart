@@ -46,7 +46,11 @@ class LibraryListState extends State<LibraryList> {
                           Container(
                             height: 4,
                           ),
-                          _RecipeId(library[index]['id'])
+                          _RecipeId(library[index]['id']),
+                          Container(
+                            height: 4,
+                          ),
+                          _RecipeState(library[index]['draft'])
                         ],
                       ),
                     ),
@@ -92,6 +96,24 @@ class _RecipeId extends StatelessWidget {
     );
   }
 }
+
+
+class _RecipeState extends StatelessWidget {
+  final int _draft;
+
+  _RecipeState(this._draft);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '$_draft',
+      style: TextStyle(color: Colors.grey.shade600),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
 
 class _ShowIngredients extends StatefulWidget {
   final int _recipeid;

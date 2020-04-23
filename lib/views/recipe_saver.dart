@@ -1,3 +1,4 @@
+import 'package:chart_tuto/views/build_list.dart';
 import 'package:flutter/material.dart';
 import 'package:chart_tuto/providers/data_provider.dart';
 
@@ -37,19 +38,25 @@ class SaveState extends State<SaveRecipe> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _Button('Save', Colors.blue, () {
-                  final name = _nameController.text;
+                _Button('Start adding ingredients', Colors.blue, () {
+                  final recipename = _nameController.text;
 
                     DataProvider.insertRecipe({
-                      'name': name,
-                      'draft': 0,
+                      'name': recipename,
+                      'draft': 1,
                     });
                   
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BuildList()),
+                  );
                 }),
                 Container(height: 16.0,),
                 _Button('Discard', Colors.grey, () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BuildList()),
+                  );
                 }),
               ],
             )
@@ -59,6 +66,10 @@ class SaveState extends State<SaveRecipe> {
     );
   }
 }
+
+
+
+
 
 class _Button extends StatelessWidget {
 

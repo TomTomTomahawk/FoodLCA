@@ -101,6 +101,12 @@ class BuildListState extends State<BuildList> {
 */
 
 class BuildList extends StatefulWidget {
+
+  //final String _recipename;
+
+  //BuildList(this._recipename);
+
+
   @override
   BuildListState createState() {
     return new BuildListState();
@@ -121,7 +127,7 @@ class BuildListState extends State<BuildList> {
             slivers: <Widget>[
               SliverPersistentHeader(
                 pinned: true,
-                delegate: MyDynamicHeader(),
+                delegate: MyDynamicHeader('heya'),//widget._recipename
               ),
 
               FutureBuilder(
@@ -214,6 +220,11 @@ class BuildListState extends State<BuildList> {
 //
 
 class MyDynamicHeader extends SliverPersistentHeaderDelegate {
+  
+  final String _recipename;
+
+  MyDynamicHeader(this._recipename);
+  
   int index = 0;
 
   @override
@@ -227,9 +238,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
           height: constraints.maxHeight,
           child: SafeArea(
             child: Center(
-                child: TextField(
-              decoration: InputDecoration(hintText: 'Recipe title'),
-            )),
+                child: Text('$_recipename')),
           ));
     });
   }
