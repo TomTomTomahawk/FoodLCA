@@ -154,7 +154,7 @@ class BuildListState extends State<BuildList> {
                               MaterialPageRoute(
                                   builder: (context) => SaveIngredient(
                                       IngredientMode.Editing,
-                                      ingredients[index])));
+                                      ingredients[index],'voodoo')));
                         },
                         child: Card(
                           child: Padding(
@@ -201,12 +201,12 @@ class BuildListState extends State<BuildList> {
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(
                 heroTag: null,
-                onPressed: () {
+                onPressed: () {/*
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Foodchoice()),
                   );
-                },
+                */},
                 child: Icon(Icons.add),
               ),
             ),

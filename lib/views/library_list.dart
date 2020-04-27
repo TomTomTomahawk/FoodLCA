@@ -1,6 +1,6 @@
+import 'package:chart_tuto/views/chart.dart';
 import 'package:chart_tuto/views/recipe_saver.dart';
 import 'package:flutter/material.dart';
-import 'package:chart_tuto/inherited_widgets/library_inherited_widget.dart';
 import 'package:chart_tuto/providers/data_provider.dart';
 import 'package:chart_tuto/views/ingredient_saver.dart';
 
@@ -17,53 +17,86 @@ class LibraryListState extends State<LibraryList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Library'),
-      ),
-      body: FutureBuilder(
-        future: DataProvider.getLibraryList(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            final library = snapshot.data;
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                _ShowIngredients(library[index]['id'])));
-                  },
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 30.0, bottom: 30, left: 13.0, right: 22.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          _RecipeName(library[index]['name']),
-                          Container(
-                            height: 4,
-                          ),
-                          _RecipeId(library[index]['id']),
-                          Container(
-                            height: 4,
-                          ),
-                          _RecipeState(library[index]['draft'])
-                        ],
+        appBar: AppBar(
+          title: Text('Library'),
+          //backgroundColor: Colors.green,
+        ),
+        body: FutureBuilder(
+          future: DataProvider.getLibraryList(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              final library = snapshot.data;
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ShowIngredients(
+                                  library[index]['id'],
+                                  library[index]['name'])));
+                    },
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 30.0, bottom: 30, left: 13.0, right: 22.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            _RecipeName(library[index]['name']),
+                            Container(
+                              height: 4,
+                            ),
+                            _RecipeId(library[index]['id']),
+                            Container(
+                              height: 4,
+                            ),
+                            _RecipeState(library[index]['draft'])
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-              itemCount: library.length,
-            );
-          }
-          return Center(child: CircularProgressIndicator());
-        },
-      ),
-    );
+                  );
+                },
+                itemCount: library.length,
+              );
+            }
+            return Center(child: CircularProgressIndicator());
+          },
+        ),
+        floatingActionButton: Stack(
+          children: <Widget>[
+            Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton.extended(
+              heroTag: null,
+              onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SaveRecipe()),
+                  );
+                },
+              //icon: Icon(Icons.add),
+              label: Text('New Recipe'),
+              backgroundColor: Colors.green,
+            ),
+          ),
+            /*Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                heroTag: null,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SaveRecipe()),
+                  );
+                },
+                child: Icon(Icons.add),
+              ),
+            ),*/
+          ],
+        ));
   }
 }
 
@@ -97,7 +130,6 @@ class _RecipeId extends StatelessWidget {
   }
 }
 
-
 class _RecipeState extends StatelessWidget {
   final int _draft;
 
@@ -115,24 +147,35 @@ class _RecipeState extends StatelessWidget {
 }
 
 
-class _ShowIngredients extends StatefulWidget {
-  final int _recipeid;
+///
+///
+///
 
-  _ShowIngredients(this._recipeid);
+class ShowIngredients extends StatefulWidget {
+  final int _recipeid;
+  final String _recipename;
+
+  ShowIngredients(this._recipeid, this._recipename);
 
   @override
-  _ShowIngredientsState createState() {
-    return new _ShowIngredientsState();
+  ShowIngredientsState createState() {
+    return new ShowIngredientsState();
   }
 }
 
-class _ShowIngredientsState extends State<_ShowIngredients> {
+class ShowIngredientsState extends State<ShowIngredients> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Library"),
-          backgroundColor: Colors.green,
+          //title: Text(widget._recipeid.toString()),
+          title: Text(widget._recipename),
+          //backgroundColor: Colors.green,
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () =>
+                Navigator.of(context).popUntil((route) => route.isFirst),
+          ),
         ),
         body: Scaffold(
             body: Container(
@@ -151,8 +194,9 @@ class _ShowIngredientsState extends State<_ShowIngredients> {
 
                     final ingredients = snapshot.data;
                     var childCount = 0;
-                    if (snapshot.connectionState == ConnectionState.done)
+                    if (snapshot.connectionState == ConnectionState.done) {
                       childCount = snapshot.data.length;
+                    }
 
                     return SliverList(
                         delegate: SliverChildBuilderDelegate(
@@ -168,7 +212,8 @@ class _ShowIngredientsState extends State<_ShowIngredients> {
                               MaterialPageRoute(
                                   builder: (context) => SaveIngredient(
                                       IngredientMode.Editing,
-                                      ingredients[index])));
+                                      ingredients[index],
+                                      widget._recipename)));
                         },
                         child: Card(
                           child: Padding(
@@ -188,7 +233,7 @@ class _ShowIngredientsState extends State<_ShowIngredients> {
                           ),
                         ),
                       );
-                    }, childCount: childCount)); //ingredients.length
+                    }, childCount: childCount));
                   }), //
             ],
           ),
@@ -202,23 +247,45 @@ class _ShowIngredientsState extends State<_ShowIngredients> {
                 heroTag: null,
                 onPressed: () {
                   DataProvider.deleteRecipe(widget._recipeid);
-                  Navigator.pop(context);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 child: Icon(Icons.delete),
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.only(left: 31),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: FloatingActionButton(
+                heroTag: null,
+                onPressed: () {Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Analyse2(widget._recipeid,widget._recipename)),
+                );
+
+                },
+                child: Icon(Icons.insert_chart),
+              ),
+            ),
+          ),
           Align(
             alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
+            child: FloatingActionButton.extended(
               heroTag: null,
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Foodchoice()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Foodchoice(widget._recipeid, widget._recipename)),
                 );
               },
-              child: Icon(Icons.add),
+              //icon: Icon(Icons.add),
+              label: Text('Add'+"\n"+'ingredient',textAlign: TextAlign.center,),
+              backgroundColor: Colors.green,
             ),
           ),
         ]));
@@ -254,10 +321,10 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate _) => true;
 
   @override
-  double get maxExtent => 90.0;
+  double get maxExtent => 0;
 
   @override
-  double get minExtent => 80.0;
+  double get minExtent => 0;
 }
 
 class _IngredientName extends StatelessWidget {

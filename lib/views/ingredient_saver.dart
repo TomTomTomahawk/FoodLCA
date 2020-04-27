@@ -1,19 +1,17 @@
+import 'package:chart_tuto/views/library_list.dart';
 import 'package:flutter/material.dart';
 import 'package:chart_tuto/providers/data_provider.dart';
 
 import 'package:chart_tuto/inherited_widgets/build_inherited_widget.dart';
 
-enum IngredientMode {
-  Editing,
-  Adding
-}
+enum IngredientMode { Editing, Adding }
 
 class SaveIngredient extends StatefulWidget {
-
   final IngredientMode ingredientMode;
   final Map<String, dynamic> ingredient;
+  final String _recipename;
 
-  SaveIngredient(this.ingredientMode, this.ingredient);
+  SaveIngredient(this.ingredientMode, this.ingredient, this._recipename);
 
   @override
   IngredientState createState() {
@@ -22,17 +20,17 @@ class SaveIngredient extends StatefulWidget {
 }
 
 class IngredientState extends State<SaveIngredient> {
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _recipeidController = TextEditingController();
-  
-  List<Map<String, String>> get _ingredients => BuildInheritedWidget.of(context).ingredients;
 
+  List<Map<String, String>> get _ingredients =>
+      BuildInheritedWidget.of(context).ingredients;
+  
   @override
   void didChangeDependencies() {
     //if (widget.ingredientMode == IngredientMode.Editing) {
-      _nameController.text = widget.ingredient['name'];
-      _recipeidController.text = widget.ingredient['recipe_id'].toString();
+    _nameController.text = widget.ingredient['name'];
+    _recipeidController.text = widget.ingredient['recipe_id'].toString();
     //}
     super.didChangeDependencies();
   }
@@ -41,9 +39,9 @@ class IngredientState extends State<SaveIngredient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.ingredientMode == IngredientMode.Adding ? 'Add ingredient' : 'Edit ingredient'
-        ),
+        title: Text(widget.ingredientMode == IngredientMode.Adding
+            ? 'Add ingredient'
+            : 'Edit ingredient'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(40.0),
@@ -52,18 +50,18 @@ class IngredientState extends State<SaveIngredient> {
           children: <Widget>[
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
-                hintText: 'Ingredient name'
-              ),
+              decoration: InputDecoration(hintText: 'Ingredient name'),
             ),
-            Container(height: 8,),
+            Container(
+              height: 8,
+            ),
             TextField(
               controller: _recipeidController,
-              decoration: InputDecoration(
-                hintText: 'Recipe id'
-              ),
+              decoration: InputDecoration(hintText: 'Recipe id'),
             ),
-            Container(height: 16.0,),
+            Container(
+              height: 16.0,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -72,10 +70,8 @@ class IngredientState extends State<SaveIngredient> {
                   final recipeid = _recipeidController.text;
 
                   if (widget?.ingredientMode == IngredientMode.Adding) {
-                    DataProvider.insertIngredient({
-                      'name': name,
-                      'recipe_id': recipeid
-                    });
+                    DataProvider.insertIngredient(
+                        {'name': name, 'recipe_id': recipeid});
                   } else if (widget?.ingredientMode == IngredientMode.Editing) {
                     DataProvider.updateIngredient({
                       'id': widget.ingredient['id'],
@@ -83,21 +79,35 @@ class IngredientState extends State<SaveIngredient> {
                       'recipe_id': _recipeidController.text,
                     });
                   }
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ShowIngredients(int.parse(recipeid),widget._recipename)),
+                  );
                 }),
-                Container(height: 16.0,),
+                Container(
+                  height: 16.0,
+                ),
                 _Button('Discard', Colors.grey, () {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  final recipeid = _recipeidController.text;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ShowIngredients(int.parse(recipeid),widget._recipename)),
+                  );
                 }),
-                widget.ingredientMode == IngredientMode.Editing ?
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: _Button('Delete', Colors.red, () async {
-                      await DataProvider.deleteIngredient(widget.ingredient['id']);
-                      Navigator.pop(context);
-                    }),
-                  )
-                 : Container()
+                widget.ingredientMode == IngredientMode.Editing
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: _Button('Delete', Colors.red, () async {
+                          await DataProvider.deleteIngredient(
+                              widget.ingredient['id']);
+                          Navigator.pop(context);
+                        }),
+                      )
+                    : Container()
               ],
             )
           ],
@@ -108,7 +118,6 @@ class IngredientState extends State<SaveIngredient> {
 }
 
 class _Button extends StatelessWidget {
-
   final String _text;
   final Color _color;
   final Function _onPressed;
@@ -129,4 +138,3 @@ class _Button extends StatelessWidget {
     );
   }
 }
-

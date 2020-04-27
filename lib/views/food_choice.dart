@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'ingredient_saver.dart';
 
 class Foodchoice extends StatelessWidget {
+
+  final int _recipeid;
+  final String _recipename;
+
+  Foodchoice(this._recipeid,this._recipename);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +24,7 @@ class Foodchoice extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Vegetables(),
+                    builder: (context) => Vegetables(_recipeid,_recipename),
                   ));
             },
           ),
@@ -28,7 +34,7 @@ class Foodchoice extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Meatandfish(),
+                    builder: (context) => Meatandfish(_recipeid,_recipename),
                   ));
             },
           ),
@@ -38,7 +44,7 @@ class Foodchoice extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Fruit(),
+                    builder: (context) => Fruit(_recipeid,_recipename),
                   ));
             },
           ),
@@ -48,7 +54,7 @@ class Foodchoice extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Dairy(),
+                    builder: (context) => Dairy(_recipeid,_recipename),
                   ));
             },
           ),
@@ -58,7 +64,7 @@ class Foodchoice extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Cereals(),
+                    builder: (context) => Cereals(_recipeid,_recipename),
                   ));
             },
           ),
@@ -68,7 +74,7 @@ class Foodchoice extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Others(),
+                    builder: (context) => Others(_recipeid,_recipename),
                   ));
             },
           ),
@@ -109,6 +115,11 @@ class _Ingredientitem extends StatelessWidget {
 
 class Vegetables extends StatelessWidget {
 
+  final int _recipeid;
+  final String _recipename;
+
+  Vegetables(this._recipeid,this._recipename);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +134,7 @@ class Vegetables extends StatelessWidget {
                 
                   builder: (context) => SaveIngredient(
                         IngredientMode.Adding,
-                        {'name': 'vegetable 1', 'recipe_id': '10'},
+                        {'name': 'vegetable 1', 'recipe_id': _recipeid.toString()},_recipename,
                       )));
         })
       ]),
@@ -132,6 +143,11 @@ class Vegetables extends StatelessWidget {
 }
 
 class Meatandfish extends StatelessWidget {
+
+  final int _recipeid;
+  final String _recipename;
+
+  Meatandfish(this._recipeid,this._recipename);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,7 +161,7 @@ class Meatandfish extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => SaveIngredient(
                         IngredientMode.Adding,
-                        {'name': 'meat 1', 'recipe_id': '10'},
+                        {'name': 'meat 1', 'recipe_id': _recipeid.toString()}, _recipename,
                       )));
         })
       ]),
@@ -154,6 +170,11 @@ class Meatandfish extends StatelessWidget {
 }
 
 class Fruit extends StatelessWidget {
+
+  final int _recipeid;
+  final String _recipename;
+
+  Fruit(this._recipeid,this._recipename);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,7 +188,7 @@ class Fruit extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => SaveIngredient(
                         IngredientMode.Adding,
-                        {'name': 'fruit 1', 'recipe_id': '10'},
+                        {'name': 'fruit 1', 'recipe_id': _recipeid.toString()},_recipename,
                       )));
         })
       ]),
@@ -176,6 +197,11 @@ class Fruit extends StatelessWidget {
 }
 
 class Dairy extends StatelessWidget {
+
+  final int _recipeid;
+  final String _recipename;
+
+  Dairy(this._recipeid,this._recipename);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,7 +215,7 @@ class Dairy extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => SaveIngredient(
                         IngredientMode.Adding,
-                        {'name': 'dairy 1', 'recipe_id': '10'},
+                        {'name': 'dairy 1', 'recipe_id': _recipeid.toString()},_recipename,
                       )));
         })
       ]),
@@ -198,6 +224,11 @@ class Dairy extends StatelessWidget {
 }
 
 class Cereals extends StatelessWidget {
+
+  final int _recipeid;
+  final String _recipename;
+
+  Cereals(this._recipeid,this._recipename);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,7 +242,7 @@ class Cereals extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => SaveIngredient(
                         IngredientMode.Adding,
-                        {'name': 'cereal 1', 'recipe_id': '10'},
+                        {'name': 'cereal 1', 'recipe_id': _recipeid.toString()},_recipename,
                       )));
         })
       ]),
@@ -220,6 +251,11 @@ class Cereals extends StatelessWidget {
 }
 
 class Others extends StatelessWidget {
+
+  final int _recipeid;
+  final String _recipename;
+  Others(this._recipeid,this._recipename);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -233,7 +269,7 @@ class Others extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => SaveIngredient(
                         IngredientMode.Adding,
-                        {'name': 'other 1', 'recipe_id': '10'},
+                        {'name': 'other 1', 'recipe_id': _recipeid.toString()},_recipename,
                       )));
         })
       ]),
