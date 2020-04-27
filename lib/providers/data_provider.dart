@@ -106,7 +106,37 @@ class DataProvider {
     return result[0]["EXISTS(SELECT * FROM recipes WHERE draft = TRUE)"];
   }
 
+    static Future getRecipeMax() async {
+    if (db == null) {
+       await open();
+    }
+     //var result = await db.rawQuery('''SELECT SUM(id) FROM recipes;''');
+    var result = await db.rawQuery('''SELECT MAX(id) FROM recipes;''');
+    return result[0]["MAX(id)"];
+  }
+
     static Future deleteRecipe(int id) async {
     await db.delete('Recipes', where: 'id = ?', whereArgs: [id]);
   }
+
+    static Future<List<Map<String, dynamic>>> getRecipeNameFromId(recipeid) async {
+    if (db == null) {
+      await open();
+    }
+    //return await db.query('Ingredients'); WHERE draft = TRUE'''
+    var result= await db.rawQuery('''SELECT * FROM recipes
+    WHERE id =?''',[recipeid]);
+    return result[0]['name'];
+  }
+
+  static Future<List<Map<String, dynamic>>> getCompareRecipeIngredientsList(recipeid,comparerecipeid) async {
+    if (db == null) {
+      await open();
+    }
+    //return await db.query('Ingredients'); WHERE draft = TRUE'''
+    return await db.rawQuery('''SELECT * FROM Ingredients
+    WHERE recipe_id =?
+    OR recipe_id =?''',[recipeid,comparerecipeid]);
+  }
+
 }
