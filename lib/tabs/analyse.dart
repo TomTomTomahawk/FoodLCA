@@ -1,21 +1,25 @@
+import 'package:chart_tuto/providers/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+
 class Analyse extends StatelessWidget {
   const Analyse({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    print(createSampleData());
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Analyse and compare"),
         backgroundColor: Colors.green,
       ),
-      body: Container(child: GroupedStackedBarChart(
-      createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    )),
+      body: Container(
+          child: GroupedStackedBarChart(
+        createSampleData(),
+        // Disable animations for image tests.
+        animate: false,
+      )),
     );
   }
 }
@@ -39,51 +43,50 @@ class GroupedStackedBarChart extends StatelessWidget {
 }
 
 /// Sample ordinal data type.
-class OrdinalSales {
-  final String year;
-  final int sales;
+class OrdinalImpacts {
+  final String recipe;
+  final int impact;
 
-  OrdinalSales(this.year, this.sales);
+  OrdinalImpacts(this.recipe, this.impact);
 }
 
+//recipe id
+
 /// Create series list with multiple series
-List<charts.Series<OrdinalSales, String>> createSampleData() {
-    final desktopSalesDataA = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-    ];
+List<charts.Series<OrdinalImpacts, String>> createSampleData() {
+  final impactIngredientA = [
+    new OrdinalImpacts('recipe name', 5),
+  ];
 
-    final tableSalesDataA = [
-      new OrdinalSales('2014', 25),
-      new OrdinalSales('2015', 50),
-    ];
+  final impactIngredientB = [
+    new OrdinalImpacts('recipe name', 25),
+  ];
 
-    final mobileSalesDataA = [
-      new OrdinalSales('2014', 10),
-      new OrdinalSales('2015', 15),
-    ];
+  final impactIngredientC = [
+    new OrdinalImpacts('recipe name', 10),
+  ];
 
-    return [
-      new charts.Series<OrdinalSales, String>(
-        id: 'Desktop A',
-        seriesCategory: 'A',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
-        data: desktopSalesDataA,
-      ),
-      new charts.Series<OrdinalSales, String>(
-        id: 'Tablet A',
-        seriesCategory: 'A',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
-        data: tableSalesDataA,
-      ),
-      new charts.Series<OrdinalSales, String>(
-        id: 'Mobile A',
-        seriesCategory: 'A',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
-        data: mobileSalesDataA,
-      ),
-    ];
-  }
+  return [
+    new charts.Series<OrdinalImpacts, String>(
+      id: 'Ingredient A',
+      seriesCategory: 'A',
+      domainFn: (OrdinalImpacts sales, _) => sales.recipe,
+      measureFn: (OrdinalImpacts sales, _) => sales.impact,
+      data: impactIngredientA,
+    ),
+    new charts.Series<OrdinalImpacts, String>(
+      id: 'Ingredient B',
+      seriesCategory: 'A',
+      domainFn: (OrdinalImpacts sales, _) => sales.recipe,
+      measureFn: (OrdinalImpacts sales, _) => sales.impact,
+      data: impactIngredientB,
+    ),
+    new charts.Series<OrdinalImpacts, String>(
+      id: 'Ingredient C',
+      seriesCategory: 'A',
+      domainFn: (OrdinalImpacts sales, _) => sales.recipe,
+      measureFn: (OrdinalImpacts sales, _) => sales.impact,
+      data: impactIngredientC,
+    ),
+  ];
+}

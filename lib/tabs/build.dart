@@ -15,8 +15,8 @@ class Build extends StatelessWidget {
       MaterialApp(
         title: 'Build',
         //home: SaveRecipe(),
-        //home: Tester(),
-        home: BuildList(), //DataProvider.getBuildMode() == 1 ? SaveRecipe() : BuildList(DataProvider.getBuildMode().toString()),
+        home: Tester(),
+        //home: BuildList(), //DataProvider.getBuildMode() == 1 ? SaveRecipe() : BuildList(DataProvider.getBuildMode().toString()),
       ),
     );
   }
@@ -37,7 +37,7 @@ class TesterState extends State<Tester> {
         title: Text('Test'),
       ),
       body: FutureBuilder(
-        future: DataProvider.getBuildMode(),
+        future: DataProvider.getCompareRecipeIngredientsList(1,3),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
       return Text('Number Of completed : ${snapshot.data}');
