@@ -9,7 +9,7 @@ class DataProvider {
 }
 
   static Future open() async {
-    db = await openDatabase(join(await getDatabasesPath(), 'database6.db'),
+    db = await openDatabase(join(await getDatabasesPath(), 'database7.db'),
         version: 1, onConfigure: _onConfigure, onCreate: (Database db, int version) async {
 
 /*
@@ -42,8 +42,8 @@ class DataProvider {
              id integer not null constraint ingredients_pk primary key autoincrement,
              name  varchar(50),
              carbon_intensity float,
-             calorie_intensity integer,
-             quantity integer,
+             calorie_intensity float,
+             quantity float,
              unit varchar(50) default 'g',
              draft boolean default TRUE,
              recipe_id integer references recipes on update cascade on delete cascade
