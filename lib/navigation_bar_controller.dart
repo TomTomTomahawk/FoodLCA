@@ -35,6 +35,8 @@ class _BottomNavigationBarControllerState
 
   int _selectedIndex = 0;
 
+
+
   Widget _bottomNavigationBar(int selectedIndex) => BottomNavigationBar(
         onTap: (int index) => setState(() => _selectedIndex = index),
         type: BottomNavigationBarType.fixed,
@@ -56,7 +58,21 @@ class _BottomNavigationBarControllerState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
+      
+      bottomNavigationBar: new Theme(
+    data: Theme.of(context).copyWith(
+        // sets the background color of the `BottomNavigationBar`
+        canvasColor: Colors.brown[900],
+        // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+        primaryColor: Colors.cyan,
+        textTheme: Theme
+            .of(context)
+            .textTheme
+            .copyWith(caption: new TextStyle(color: Colors.white))), // sets the inactive color of the `BottomNavigationBar`
+    child: _bottomNavigationBar(_selectedIndex),
+  ),
+      
+      //bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
       body: PageStorage(
         child: pages[_selectedIndex],
         bucket: bucket,
