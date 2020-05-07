@@ -75,7 +75,9 @@ class SaveState extends State<SaveRecipe> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Save food'),
+          title: Text('Name your new recipe'),
+                    backgroundColor: Colors.brown[900],
+
         ),
         body: FutureBuilder(
           future: DataProvider.getRecipeMax(),
@@ -89,7 +91,7 @@ class SaveState extends State<SaveRecipe> {
                   children: <Widget>[
                     TextField(
                       controller: _nameController,
-                      decoration: InputDecoration(hintText: 'Recipe title'),
+                      decoration: InputDecoration(hintText: 'Recipe name'),
                     ),
                     Container(
                       height: 16.0,
@@ -97,7 +99,7 @@ class SaveState extends State<SaveRecipe> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        _Button('Start adding ingredients', Colors.blue, () {
+                        _Button('Start adding ingredients', Colors.green[900], () {
                           final recipename = _nameController.text;
                           var recipeid;
                           if (snapshot.data==null){recipeid=1;} else {recipeid=snapshot.data +1;}
