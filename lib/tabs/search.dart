@@ -5,17 +5,33 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Search"),
-        backgroundColor: Colors.green,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Search'),
+          backgroundColor: Colors.brown[900],
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("images/board4.jpg"), fit: BoxFit.cover)),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              title: Text('My App'),
+              centerTitle: true,
+              leading: IconButton(
+                  icon: Icon(
+                    Icons.list,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {}),
+            ),
+          ),
+        ),
       ),
-      body: ListView.builder(itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('Lorem Ipsum'),
-          subtitle: Text('$index'),
-        );
-      }),
     );
   }
 }
