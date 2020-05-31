@@ -14,9 +14,9 @@ class Foodchoice extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select food type"),
-        backgroundColor: Colors.brown[900],
+        backgroundColor: Colors.green[900],
       ),
-      backgroundColor: Colors.green[200],
+      backgroundColor: Colors.grey[100],
       body: ListView(
         children: <Widget>[
           _Ingredientitem(
@@ -96,6 +96,14 @@ class _Ingredientitem extends StatelessWidget {
     return GestureDetector(
       onTap: _onTap,
       child: Card(
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(0.0),
+          side: BorderSide(
+            color: Colors.black,
+            width: 0.0,
+          ),
+        ),
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.only(
               top: 40.0, bottom: 40, left: 13.0, right: 22.0),
@@ -125,7 +133,9 @@ class Vegetables extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select vegetable"),
+        backgroundColor: Colors.green[900],
       ),
+      backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
         _Ingredientitem('Vegetable 1', () {
           Navigator.push(
@@ -160,7 +170,9 @@ class Meatandfish extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select Meat or fish"),
+        backgroundColor: Colors.green[900],
       ),
+      backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
         _Ingredientitem('Meat 1', () {
           Navigator.push(
@@ -195,7 +207,9 @@ class Fruit extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select fruit"),
+        backgroundColor: Colors.green[900],
       ),
+      backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
         _Ingredientitem('Fruit 1', () {
           Navigator.push(
@@ -230,7 +244,9 @@ class Dairy extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select Dairy product"),
+        backgroundColor: Colors.green[900],
       ),
+      backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
         _Ingredientitem('Dairy 1', () {
           Navigator.push(
@@ -265,7 +281,9 @@ class Cereals extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select cereal"),
+        backgroundColor: Colors.green[900],
       ),
+      backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
         _Ingredientitem('Cereal 1', () {
           Navigator.push(
@@ -300,7 +318,9 @@ class Others extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select other"),
+        backgroundColor: Colors.green[900],
       ),
+      backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
         _Ingredientitem('Other 1', () {
           Navigator.push(

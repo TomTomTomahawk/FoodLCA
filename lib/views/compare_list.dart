@@ -1,5 +1,5 @@
-import 'package:chart_tuto/views/chart.dart';
-import 'package:chart_tuto/views/compare_chart.dart';
+import 'package:chart_tuto/views/charts/chart.dart';
+import 'package:chart_tuto/views/charts/comparechartmanager.dart';
 import 'package:chart_tuto/views/recipe_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:chart_tuto/providers/data_provider.dart';
@@ -11,7 +11,7 @@ class CompareList extends StatefulWidget {
   final int _recipeid;
   final String _recipename;
 
-  CompareList(this._recipeid,this._recipename);
+  CompareList(this._recipeid, this._recipename);
 
   @override
   CompareListState createState() {
@@ -24,9 +24,10 @@ class CompareListState extends State<CompareList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Choose a recipe to compare with'),
-        //backgroundColor: Colors.green,
+        title: Text('Compare ' + widget._recipename + ' with:'),
+        backgroundColor: Colors.green[900],
       ),
+      backgroundColor: Colors.grey[100],
       body: FutureBuilder(
         future: DataProvider.getLibraryList(),
         builder: (context, snapshot) {
@@ -34,35 +35,40 @@ class CompareListState extends State<CompareList> {
             final library = snapshot.data;
             return ListView.builder(
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                CompareAnalyse2(widget._recipeid,widget._recipename,library[index]['id'],library[index]['name'])));
-                  },
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 30.0, bottom: 30, left: 13.0, right: 22.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          _RecipeName(library[index]['name']),
-                          Container(
-                            height: 4,
-                          ),
-                          _RecipeId(library[index]['id']),
-                          Container(
-                            height: 4,
-                          ),
-                          _RecipeState(library[index]['draft'])
-                        ],
+                if (library[index]['id'] != widget._recipeid) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CompareChartManager(
+                                  widget._recipeid,
+                                  widget._recipename,
+                                  library[index]['id'],
+                                  library[index]['name'])));
+                    },
+                    child: Card(
+                      shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0),
+                        side: BorderSide(
+                          color: Colors.black,
+                          width: 0.0,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 30.0, bottom: 30, left: 13.0, right: 22.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            _RecipeName(library[index]['name']),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                }
+                return Container();
               },
               itemCount: library.length,
             );
