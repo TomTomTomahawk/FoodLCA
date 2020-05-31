@@ -70,7 +70,7 @@ class CompareAnalyseState extends State<CompareAnalyse2> {
                         '${widget._recipename}', ingredients[i]['id']),
                   ],
                 ));
-                print(widget._recipename);
+                
               } if (ingredients[i]['recipe_id'] == widget._comparerrecipeid) {
                 data.add(new charts.Series<OrdinalImpacts, String>(
                   id: truncateWithEllipsis(6, ingredients[i]['name']), //ingredients[i]['name'].substring(0, 7),
@@ -83,7 +83,7 @@ class CompareAnalyseState extends State<CompareAnalyse2> {
                         '${widget._comparerrecipename}', ingredients[i]['id']),
                   ],
                 ));
-                print(widget._comparerrecipename);
+
               }
             }
 
