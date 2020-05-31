@@ -9,26 +9,9 @@ class DataProvider {
 }
 
   static Future open() async {
-    db = await openDatabase(join(await getDatabasesPath(), 'database7.db'),
+    db = await openDatabase(join(await getDatabasesPath(), 'database20.db'),
         version: 1, onConfigure: _onConfigure, onCreate: (Database db, int version) async {
 
-/*
-      await db.execute('''
-          CREATE TABLE IF NOT EXISTS Ingredients(
-            id integer primary key autoincrement,
-            title text not null,
-            text text not null
-          );
-        ''');
-
-      await db.execute('''
-          CREATE TABLE IF NOT EXISTS Recipes(
-            id integer primary key autoincrement,
-            title text not null,
-            text text not null
-       );
-       ''');
-*/
         await db.execute('''
             CREATE TABLE recipes(
              id integer constraint recipes_pk primary key autoincrement,
@@ -137,6 +120,10 @@ class DataProvider {
     return await db.rawQuery('''SELECT * FROM Ingredients
     WHERE recipe_id =?
     OR recipe_id =?''',[recipeid,comparerecipeid]);
+  }
+
+  static Future updateRecipe(Map<String, dynamic> recipe) async {
+    await db.update('recipes', recipe, where: 'id = ?', whereArgs: [recipe['id']]);
   }
 
 }
