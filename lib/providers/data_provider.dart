@@ -9,7 +9,7 @@ class DataProvider {
 }
 
   static Future open() async {
-    db = await openDatabase(join(await getDatabasesPath(), 'database20.db'),
+    db = await openDatabase(join(await getDatabasesPath(), 'database23.db'),
         version: 1, onConfigure: _onConfigure, onCreate: (Database db, int version) async {
 
         await db.execute('''
