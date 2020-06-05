@@ -1,10 +1,4 @@
-import 'package:chart_tuto/views/charts/chartcalorie.dart';
-import 'package:chart_tuto/views/charts/chartcarbon.dart';
-import 'package:chart_tuto/views/charts/chartcarboncalorie.dart';
 import 'package:flutter/material.dart';
-
-import 'package:chart_tuto/views/compare_list.dart';
-
 import 'comparechartcalorie.dart';
 import 'comparechartcarbon.dart';
 import 'comparechartcarboncalorie.dart';
@@ -46,7 +40,7 @@ class _CompareChartManagerState extends State<CompareChartManager> {
   Widget buildPageView() {
     return Stack(children: <Widget>[
       SizedBox(
-          height: 595,
+          height: MediaQuery.of(context).size.height - AppBar().preferredSize.height,
           child: PageView(
             controller: pageController,
             onPageChanged: (index) {
@@ -65,7 +59,7 @@ class _CompareChartManagerState extends State<CompareChartManager> {
               width: 10,
               child: Container(
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: _selectedIndex == 0 ? Colors.black : Colors.grey)))),
+                      shape: BoxShape.circle, color: _selectedIndex == 0 ? Colors.blue : Colors.grey)))),
       Align(
           alignment: Alignment(0.09, 0.95),
           child: SizedBox(
@@ -73,7 +67,7 @@ class _CompareChartManagerState extends State<CompareChartManager> {
               width: 10,
               child: Container(
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: _selectedIndex == 1 ? Colors.black : Colors.grey)))),
+                      shape: BoxShape.circle, color: _selectedIndex == 1 ? Colors.blue : Colors.grey)))),
       Align(
           alignment: Alignment(0.16, 0.95),
           child: SizedBox(
@@ -81,7 +75,7 @@ class _CompareChartManagerState extends State<CompareChartManager> {
               width: 10,
               child: Container(
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: _selectedIndex == 2 ? Colors.black : Colors.grey)))),
+                      shape: BoxShape.circle, color: _selectedIndex == 2 ? Colors.blue : Colors.grey)))),
     ]);
   }
 
@@ -116,7 +110,7 @@ class _CompareChartManagerState extends State<CompareChartManager> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Comparing ' + truncateWithEllipsis(7,widget._recipename) + ' with '+ truncateWithEllipsis(7,widget._comparerrecipename)),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Color(0xFF162A49),
       ),
       body: buildPageView(),
     );

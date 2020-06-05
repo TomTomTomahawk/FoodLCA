@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:chart_tuto/providers/data_provider.dart';
-import 'package:chart_tuto/views/compare_list.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -30,18 +27,6 @@ class ChartCarbonState extends State<ChartCarbon> {
             final ingredients = snapshot.data;
             if (snapshot.connectionState != ConnectionState.done) {
               return Center(child: CircularProgressIndicator());
-            }
-            var colors = [];
-            if (ingredients.length <= 7) {
-              colors = [
-                charts.ColorUtil.fromDartColor(Colors.lightGreen[300]),
-                charts.ColorUtil.fromDartColor(Colors.green[500]),
-                charts.ColorUtil.fromDartColor(Colors.teal[600]),
-                charts.ColorUtil.fromDartColor(Colors.cyan[900]),
-                charts.ColorUtil.fromDartColor(Colors.lightBlue[900]),
-                charts.ColorUtil.fromDartColor(Colors.indigo[900]),
-                charts.ColorUtil.fromDartColor(Colors.purple[900]),
-              ];
             }
 
             String truncateWithEllipsis(int cutoff, String myString) {
@@ -81,21 +66,31 @@ class ChartCarbonState extends State<ChartCarbon> {
             ingredients_sorted.sort(
                 (a, b) => a['datacarbon'].toInt() - b['datacarbon'].toInt());
 
-            var ingredients_sortedcarbon = [];
+            var colors = [];
 
-            for (var i = ingredients.length - 1; i >= 0; i--) {
-              ingredients_sortedcarbon.add(ingredients_sorted[i]);
+            for (var i = 0; i <= ingredients_sorted.length ~/ 10; i++) {
+              colors.add(charts.ColorUtil.fromDartColor(Colors.purple[900]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.indigo[900]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.lightBlue[900]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.cyan[900]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.teal[600]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.green[500]));
+              colors
+                  .add(charts.ColorUtil.fromDartColor(Colors.lightGreen[300]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.yellow[400]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.orange[400]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.red[600]));
             }
 
             List<charts.Series<OrdinalImpacts, String>> datacarbon = [];
             for (var i = 0; i < ingredients.length; i++) {
               datacarbon.add(new charts.Series<OrdinalImpacts, String>(
                 //id: ingredients[i]['name'].substring(0, 7),
-                id: truncateWithEllipsis(6, ingredients_sorted[i]['name']),
+                id: truncateWithEllipsis(11, ingredients_sorted[i]['name']),
                 //seriesCategory: 'A',
                 domainFn: (OrdinalImpacts sales, _) => sales.recipe,
                 measureFn: (OrdinalImpacts sales, _) => sales.impact,
-                colorFn: (_, __) => colors[i],
+                colorFn: (_, __) => colors[ingredients_sorted.length - i - 1],//
                 data: [
                   new OrdinalImpacts(
                       '',
@@ -106,78 +101,21 @@ class ChartCarbonState extends State<ChartCarbon> {
               ));
             }
 
-            return GroupedStackedBarChart(
-                  datacarbon,
-                  // Disable animations for image tests.
-                  'kg-CO2-eq',
-                );
-
-            /*return ListView(
-              padding: const EdgeInsets.fromLTRB(0, 3, 0, 75),
-              children: <Widget>[
-                Card(
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(0.0),
-                    side: BorderSide(
-                      color: Colors.black,
-                      width: 0.0,
-                    ),
-                  ),
-                  color: Colors.white,
-                  child: Column(children: <Widget>[
-                    Container(height: 10),
-                    Text(
-                      'Carbon impact',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Container(height: 10),
-                  ]),
-                ),
-                SizedBox(
-                    width: 200.0,
-                    height: 500.0,
-                    child: Card(
-                        shape: ContinuousRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 0.0,
-                          ),
-                        ),
-                        color: Colors.white,
-                        child: GroupedStackedBarChart(
-                          datacarbon,
-                          // Disable animations for image tests.
-                          'kg-CO2-eq',
-                        ))),
-                Card(
-                    shape: ContinuousRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0),
-                      side: BorderSide(
-                        color: Colors.black,
-                        width: 0.0,
-                      ),
-                    ),
-                    color: Colors.white,
-                    child: ExpansionTile(
-                        title: Text('More details',
-                            style: TextStyle(color: Colors.black)),
-                        children: <Widget>[
-                          for (var i = 0; i < ingredients.length; i++)
-                            new ListTile(
-                                title: Text(ingredients_sortedcarbon[i]
-                                        ['name'] +
-                                    ': ' +
-                                    (ingredients_sortedcarbon[i]['quantity'] *
-                                            ingredients_sortedcarbon[i]
-                                                ['carbon_intensity'] /
-                                            1000)
-                                        .toString() +
-                                    ' kg-CO2-eq'))
-                        ])),
-              ],
-            );*/
+            return (ingredients_sorted.length) <= 12
+                ? GroupedStackedBarChart(
+                    datacarbon,
+                    'kg-CO2-eq',
+                    1,
+                    12,
+                    charts.BehaviorPosition.end,
+                    charts.OutsideJustification.start)
+                : GroupedStackedBarChart(
+                    datacarbon,
+                    'kg-CO2-eq',
+                    2,
+                    (ingredients_sorted.length / 2).round(),
+                    charts.BehaviorPosition.bottom,
+                    charts.OutsideJustification.middleDrawArea);
           }),
     );
   }

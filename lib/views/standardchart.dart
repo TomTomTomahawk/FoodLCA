@@ -4,8 +4,11 @@ import 'package:charts_flutter/flutter.dart' as charts;
 class GroupedStackedBarChart extends StatelessWidget {
   final List<charts.Series> seriesList;
   final String ylabel;
-
-  GroupedStackedBarChart(this.seriesList, this.ylabel);
+  final int desiredMaxColumns;
+  final int desiredMaxRows;
+  var position;
+  var outsideJustification;
+  GroupedStackedBarChart(this.seriesList, this.ylabel, this.desiredMaxColumns, this.desiredMaxRows, this.position, this.outsideJustification);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +19,11 @@ class GroupedStackedBarChart extends StatelessWidget {
           barGroupingType: charts.BarGroupingType.groupedStacked,
           behaviors: [
             new charts.SeriesLegend(
-              desiredMaxColumns: 4,
-              desiredMaxRows: 5,
-              position: charts.BehaviorPosition.top,
-              outsideJustification: charts.OutsideJustification.middle,
-              horizontalFirst: true,
+              desiredMaxColumns: desiredMaxColumns,//2,
+              desiredMaxRows: desiredMaxRows,//12,
+              position: position,//charts.BehaviorPosition.end,
+              outsideJustification: outsideJustification,//charts.OutsideJustification.start,
+              horizontalFirst: false,
               entryTextStyle: charts.TextStyleSpec(
                   color: charts.MaterialPalette.black,
                   //fontFamily: 'Georgia',

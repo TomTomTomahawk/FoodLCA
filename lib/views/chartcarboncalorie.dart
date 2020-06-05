@@ -1,10 +1,6 @@
-import 'dart:ffi';
-
 import 'package:chart_tuto/providers/data_provider.dart';
-import 'package:chart_tuto/views/compare_list.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-
 import 'standardchart.dart';
 
 class ChartCarbonCalorie extends StatefulWidget {
@@ -30,18 +26,6 @@ class ChartCarbonCalorieState extends State<ChartCarbonCalorie> {
             final ingredients = snapshot.data;
             if (snapshot.connectionState != ConnectionState.done) {
               return Center(child: CircularProgressIndicator());
-            }
-            var colors = [];
-            if (ingredients.length <= 7) {
-              colors = [
-                charts.ColorUtil.fromDartColor(Colors.lightGreen[300]),
-                charts.ColorUtil.fromDartColor(Colors.green[500]),
-                charts.ColorUtil.fromDartColor(Colors.teal[600]),
-                charts.ColorUtil.fromDartColor(Colors.cyan[900]),
-                charts.ColorUtil.fromDartColor(Colors.lightBlue[900]),
-                charts.ColorUtil.fromDartColor(Colors.indigo[900]),
-                charts.ColorUtil.fromDartColor(Colors.purple[900]),
-              ];
             }
 
             String truncateWithEllipsis(int cutoff, String myString) {
@@ -91,19 +75,29 @@ class ChartCarbonCalorieState extends State<ChartCarbonCalorie> {
                 b['datacarboncalorie'].toInt() -
                 a['datacarboncalorie'].toInt());
 
-            var ingredients_sortedcarboncalorie = [];
+            var colors = [];
 
-            for (var i = 0; i < ingredients.length; i++) {
-              ingredients_sortedcarboncalorie.add(ingredients_sorted[i]);
+            for (var i = 0; i <= ingredients_sorted.length ~/ 10; i++) {
+              colors.add(charts.ColorUtil.fromDartColor(Colors.red[600]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.orange[400]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.yellow[400]));
+              colors
+                  .add(charts.ColorUtil.fromDartColor(Colors.lightGreen[300]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.green[500]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.teal[600]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.cyan[900]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.lightBlue[900]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.indigo[900]));
+              colors.add(charts.ColorUtil.fromDartColor(Colors.purple[900]));
             }
 
             List<charts.Series<OrdinalImpacts, String>> datacarboncalorie = [];
             for (var i = 0; i < ingredients.length; i++) {
               datacarboncalorie.add(new charts.Series<OrdinalImpacts, String>(
                 //id: ingredients[i]['name'].substring(0, 7),
-                id: truncateWithEllipsis(6, ingredients_sorted[i]['name']),
+                id: truncateWithEllipsis(11, ingredients_sorted[i]['name']),
                 seriesCategory:
-                    truncateWithEllipsis(6, ingredients_sorted[i]['name']),
+                    truncateWithEllipsis(11, ingredients_sorted[i]['name']),
                 domainFn: (OrdinalImpacts sales, _) => sales.recipe,
                 measureFn: (OrdinalImpacts sales, _) => sales.impact,
                 colorFn: (_, __) => colors[colors.length - 1 - i],
@@ -116,78 +110,21 @@ class ChartCarbonCalorieState extends State<ChartCarbonCalorie> {
                 ],
               ));
             }
-            return GroupedStackedBarChart(
-              datacarboncalorie,
-              // Disable animations for image tests.
-              'g-CO2-eq per calorie',
-            );
-            /*return ListView(
-              padding: const EdgeInsets.fromLTRB(0, 3, 0, 75),
-              children: <Widget>[
-                Card(
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(0.0),
-                    side: BorderSide(
-                      color: Colors.black,
-                      width: 0.0,
-                    ),
-                  ),
-                  color: Colors.white,
-                  child: Column(children: <Widget>[
-                    Container(height: 10),
-                    Text(
-                      'Impact per calorie',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Container(height: 10),
-                  ]),
-                ),
-                SizedBox(
-                    width: 200.0,
-                    height: 500.0,
-                    child: Card(
-                        shape: ContinuousRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 0.0,
-                          ),
-                        ),
-                        color: Colors.white,
-                        child: GroupedStackedBarChart(
-                          datacarboncalorie,
-                          // Disable animations for image tests.
-                          'g-CO2-eq per calorie',
-                        ))),
-                Card(
-                    shape: ContinuousRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0),
-                      side: BorderSide(
-                        color: Colors.black,
-                        width: 0.0,
-                      ),
-                    ),
-                    color: Colors.white,
-                    child: ExpansionTile(
-                        title: Text('More details',
-                            style: TextStyle(color: Colors.black)),
-                        children: <Widget>[
-                          for (var i = 0; i < ingredients.length; i++)
-                            new ListTile(
-                                title: Text(ingredients_sortedcarboncalorie[i]
-                                        ['name'] +
-                                    ': ' +
-                                    (ingredients_sortedcarboncalorie[i]
-                                                ['carbon_intensity'] *
-                                            1000 /
-                                            ingredients_sortedcarboncalorie[i]
-                                                ['calorie_intensity'])
-                                        .toString() +
-                                    ' kg-CO2-eq/calorie'))
-                        ])),
-              ],
-            );*/
+            return (ingredients_sorted.length) <= 12
+                ? GroupedStackedBarChart(
+                    datacarboncalorie,
+                    'g-CO2-eq per kcal',
+                    1,
+                    12,
+                    charts.BehaviorPosition.end,
+                    charts.OutsideJustification.start)
+                : GroupedStackedBarChart(
+                    datacarboncalorie,
+                    'g-CO2-eq per kcal',
+                    2,
+                    (ingredients_sorted.length / 2).round(),
+                    charts.BehaviorPosition.bottom,
+                    charts.OutsideJustification.middleDrawArea);
           }),
     );
   }

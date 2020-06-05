@@ -1,5 +1,4 @@
 import 'package:chart_tuto/providers/data_provider.dart';
-import 'package:chart_tuto/views/compare_list.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
