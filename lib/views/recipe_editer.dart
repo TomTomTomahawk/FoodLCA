@@ -1,9 +1,5 @@
-import 'package:chart_tuto/views/library_list.dart';
 import 'package:flutter/material.dart';
 import 'package:chart_tuto/providers/data_provider.dart';
-
-import 'package:chart_tuto/inherited_widgets/build_inherited_widget.dart';
-
 import 'ingredient_list.dart';
 
 class EditRecipe extends StatefulWidget {

@@ -1,6 +1,4 @@
-import 'package:chart_tuto/providers/data_provider.dart';
 import 'package:flutter/material.dart';
-
 import 'ingredient_saver.dart';
 
 class Foodchoice extends StatelessWidget {
@@ -14,7 +12,7 @@ class Foodchoice extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select food type"),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Color(0xFF162A49),
       ),
       backgroundColor: Colors.grey[100],
       body: ListView(
@@ -95,7 +93,28 @@ class _Ingredientitem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _onTap,
-      child: Card(
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(bottom: BorderSide(color: Colors.grey))),
+        child: Padding(
+            padding: const EdgeInsets.only(
+                top: 40, bottom: 40, left: 35.0, right: 15),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(children: <Widget>[
+                    Text(
+                      _text,
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+                  Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                ])),
+      ),
+
+      /*Card(
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(0.0),
           side: BorderSide(
@@ -117,7 +136,7 @@ class _Ingredientitem extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ),*/
     );
   }
 }
@@ -133,7 +152,7 @@ class Vegetables extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select vegetable"),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Color(0xFF162A49),
       ),
       backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
@@ -145,10 +164,9 @@ class Vegetables extends StatelessWidget {
                         IngredientMode.Adding,
                         {
                           'name': 'vegetable 1',
-                          'carbon_intensity': 0.5,
-                          'carbon_intensity': 0.5,
+                          'carbon_intensity': 3,
                           'calorie_intensity': 2000,
-                          'quantity': 0,
+                          'quantity': '',
                           'unit': 'g',
                           'recipe_id': _recipeid
                         },
@@ -170,7 +188,7 @@ class Meatandfish extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select Meat or fish"),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Color(0xFF162A49),
       ),
       backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
@@ -182,10 +200,9 @@ class Meatandfish extends StatelessWidget {
                         IngredientMode.Adding,
                         {
                           'name': 'meat 1',
-                          'carbon_intensity': 0.5,
-                          'carbon_intensity': 0.5,
+                          'carbon_intensity': 30,
                           'calorie_intensity': 2000,
-                          'quantity': 0,
+                          'quantity': '',
                           'unit': 'g',
                           'recipe_id': _recipeid
                         },
@@ -207,7 +224,7 @@ class Fruit extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select fruit"),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Color(0xFF162A49),
       ),
       backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
@@ -219,10 +236,9 @@ class Fruit extends StatelessWidget {
                         IngredientMode.Adding,
                         {
                           'name': 'fruit 1',
-                          'carbon_intensity': 0.5,
-                          'carbon_intensity': 0.5,
+                          'carbon_intensity': 3,
                           'calorie_intensity': 2000,
-                          'quantity': 0,
+                          'quantity': '',
                           'unit': 'g',
                           'recipe_id': _recipeid
                         },
@@ -244,7 +260,7 @@ class Dairy extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select Dairy product"),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Color(0xFF162A49),
       ),
       backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
@@ -256,10 +272,9 @@ class Dairy extends StatelessWidget {
                         IngredientMode.Adding,
                         {
                           'name': 'dairy 1',
-                          'carbon_intensity': 0.5,
-                          'carbon_intensity': 0.5,
+                          'carbon_intensity': 10,
                           'calorie_intensity': 2000,
-                          'quantity': 0,
+                          'quantity': '',
                           'unit': 'g',
                           'recipe_id': _recipeid
                         },
@@ -281,7 +296,7 @@ class Cereals extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select cereal"),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Color(0xFF162A49),
       ),
       backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
@@ -293,10 +308,9 @@ class Cereals extends StatelessWidget {
                         IngredientMode.Adding,
                         {
                           'name': 'cereal 1',
-                          'carbon_intensity': 0.5,
-                          'carbon_intensity': 0.5,
+                          'carbon_intensity': 2,
                           'calorie_intensity': 2000,
-                          'quantity': 0,
+                          'quantity': '',
                           'unit': 'g',
                           'recipe_id': _recipeid
                         },
@@ -318,7 +332,7 @@ class Others extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select other"),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Color(0xFF162A49),
       ),
       backgroundColor: Colors.grey[100],
       body: ListView(children: <Widget>[
@@ -330,10 +344,9 @@ class Others extends StatelessWidget {
                         IngredientMode.Adding,
                         {
                           'name': 'other 1',
-                          'carbon_intensity': 0.5,
-                          'carbon_intensity': 0.5,
+                          'carbon_intensity': 5,
                           'calorie_intensity': 2000,
-                          'quantity': 0,
+                          'quantity': '',
                           'unit': 'g',
                           'recipe_id': _recipeid
                         },
