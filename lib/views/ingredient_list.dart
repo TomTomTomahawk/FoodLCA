@@ -102,45 +102,190 @@ class ShowIngredientsState extends State<ShowIngredients> {
               MaterialPageRoute(builder: (context) => LibraryList()),
             ),
         child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              title: Text(widget._recipename),
-              //elevation: 0.0,
-              backgroundColor: Color(0xFF162A49),
-              leading: new IconButton(
-                icon: new Icon(Icons.arrow_back),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LibraryList()),
-                ),
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: Text(widget._recipename),
+            //elevation: 0.0,
+            backgroundColor: Color(0xFF162A49),
+            leading: new IconButton(
+              icon: new Icon(Icons.arrow_back),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LibraryList()),
               ),
             ),
-            body: FutureBuilder(
-              future: DataProvider.getRecipeIngredientsList(widget._recipeid),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  final ingredients = snapshot.data;
-                  var totalcarbon = 0.0;
-                  for (var i = 0; i < ingredients.length; i++) {
-                    totalcarbon = totalcarbon +
-                        ingredients[i]['quantity'] *
-                            ingredients[i]['carbon_intensity'];
-                  }
+          ),
+          body: FutureBuilder(
+            future: DataProvider.getRecipeIngredientsList(widget._recipeid),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                final ingredients = snapshot.data;
+                var totalcarbon = 0.0;
+                for (var i = 0; i < ingredients.length; i++) {
+                  totalcarbon = totalcarbon +
+                      ingredients[i]['quantity'] *
+                          ingredients[i]['carbon_intensity'];
+                }
 
-                  var totalcalories = 0.0;
-                  for (var i = 0; i < ingredients.length; i++) {
-                    totalcalories = totalcalories +
-                        ingredients[i]['quantity'] *
-                            ingredients[i]['calorie_intensity'] /
-                            1000;
-                  }
-                  return ListView(
-                    children: <Widget>[
-                      Container(
-                        height: 10,
-                      ),
-                      Text(
-                        '  Impact assessment',
+                var totalcalories = 0.0;
+                for (var i = 0; i < ingredients.length; i++) {
+                  totalcalories = totalcalories +
+                      ingredients[i]['quantity'] *
+                          ingredients[i]['calorie_intensity'] /
+                          1000;
+                }
+                return ListView(
+                  children: <Widget>[
+                    Container(
+                      height: 10,
+                    ),
+                    Text(
+                      '  Impact assessment',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Container(
+                      height: 10,
+                    ),
+                    _SummaryTile(
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: ingredients.length <= 12
+                                ? MediaQuery.of(context).size.height * 0.75
+                                : MediaQuery.of(context).size.height * 0.75 +
+                                    (ingredients.length / 2).round() *
+                                        MediaQuery.of(context).size.height *
+                                        0.05,
+                            color: Colors.white,
+                            child: ChartCarbon(
+                                widget._recipeid, widget._recipename)),
+                        'Carbon impact',
+                        ingredients.length > 0
+                            ? totalcarbon.toStringAsFixed(0)
+                            : '0',
+                        'g-CO\u2082-eq'),
+                    _SummaryTile(
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: ingredients.length <= 12
+                                ? MediaQuery.of(context).size.height * 0.75
+                                : MediaQuery.of(context).size.height * 0.75 +
+                                    (ingredients.length / 2).round() *
+                                        MediaQuery.of(context).size.height *
+                                        0.05,
+                            color: Colors.white,
+                            child: ChartCalorie(
+                                widget._recipeid, widget._recipename)),
+                        'Calories',
+                        ingredients.length > 0
+                            ? totalcalories.toStringAsFixed(0)
+                            : '0',
+                        'kcal'),
+                    _SummaryTile(
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: ingredients.length <= 12
+                                ? MediaQuery.of(context).size.height * 0.75
+                                : MediaQuery.of(context).size.height * 0.75 +
+                                    (ingredients.length / 2).round() *
+                                        MediaQuery.of(context).size.height *
+                                        0.05,
+                            color: Colors.white,
+                            child: ChartCarbonCalorie(
+                                widget._recipeid, widget._recipename)),
+                        'Carbon impact per calorie',
+                        (ingredients.length > 0 &&
+                                totalcarbon != 0 &&
+                                totalcalories != 0)
+                            ? (totalcarbon / totalcalories).toStringAsFixed(2)
+                            : '0',
+                        'g-CO\u2082-eq/kcal'),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.04),
+                    Text(
+                      '  Ingredients',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Container(
+                      height: 10,
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      reverse: true,
+                      physics: ScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SaveIngredient(
+                                        IngredientMode.Editing,
+                                        ingredients[index],
+                                        widget._recipename)));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(color: Colors.grey))),
+                            child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 15, bottom: 15, left: 35, right: 13),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.535,
+                                        child: _IngredientName(
+                                            ingredients[index]['name'])),
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.18,
+                                        child: _IngredientQuantity(
+                                            ingredients[index]['quantity']
+                                                .round())),
+                                    Icon(Icons.arrow_forward_ios,
+                                        color: Colors.grey)
+                                  ],
+                                )),
+                          ),
+                        );
+                      },
+                      itemCount: ingredients.length,
+                    ),
+                    ingredients.length == 0
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                top: 0, bottom: 15, left: 35.0, right: 13.0),
+                            child: Text(
+                                'The recipe has no ingredients.\nTap the + button to add an ingredient.',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 4,
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.red[600])))
+                        : Container(),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.04,
+                        color: Colors.grey[300]),
+                    Container(
+                      color: Colors.grey[300],
+                      child: Text(
+                        '  Options',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             color: Colors.black,
@@ -149,229 +294,83 @@ class ShowIngredientsState extends State<ShowIngredients> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      Container(
-                        height: 10,
-                      ),
-                      _SummaryTile(
-                          Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: ingredients.length <= 12
-                                  ? MediaQuery.of(context).size.height * 0.75
-                                  : MediaQuery.of(context).size.height * 0.75 +
-                                      (ingredients.length / 2).round() *
-                                          MediaQuery.of(context).size.height *
-                                          0.05,
-                              color: Colors.white,
-                              child: ChartCarbon(
-                                  widget._recipeid, widget._recipename)),
-                          'Carbon impact',
-                          ingredients.length > 0
-                              ? totalcarbon.toStringAsFixed(0)
-                              : '0',
-                          'g-CO2-eq'),
-                      _SummaryTile(
-                          Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: ingredients.length <= 12
-                                  ? MediaQuery.of(context).size.height * 0.75
-                                  : MediaQuery.of(context).size.height * 0.75 +
-                                      (ingredients.length / 2).round() *
-                                          MediaQuery.of(context).size.height *
-                                          0.05,
-                              color: Colors.white,
-                              child: ChartCalorie(
-                                  widget._recipeid, widget._recipename)),
-                          'Calories',
-                          ingredients.length > 0
-                              ? totalcalories.toStringAsFixed(0)
-                              : '0',
-                          'kcal'),
-                      _SummaryTile(
-                          Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: ingredients.length <= 12
-                                  ? MediaQuery.of(context).size.height * 0.75
-                                  : MediaQuery.of(context).size.height * 0.75 +
-                                      (ingredients.length / 2).round() *
-                                          MediaQuery.of(context).size.height *
-                                          0.05,
-                              color: Colors.white,
-                              child: ChartCarbonCalorie(
-                                  widget._recipeid, widget._recipename)),
-                          'Carbon impact per calorie',
-                          (ingredients.length > 0 &&
-                                  totalcarbon != 0 &&
-                                  totalcalories != 0)
-                              ? (totalcarbon / totalcalories).toStringAsFixed(2)
-                              : '0',
-                          'g-CO2-eq/kcal'),
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.04),
-                      Text(
-                        '  Ingredients',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Container(
-                        height: 10,
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        reverse: true,
-                        physics: ScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SaveIngredient(
-                                          IngredientMode.Editing,
-                                          ingredients[index],
-                                          widget._recipename)));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(color: Colors.grey))),
-                              child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 15,
-                                      bottom: 15,
-                                      left: 35.0,
-                                      right: 0),
-                                  child: Row(
-                                    children: <Widget>[
-                                      SizedBox(
-                                          width: 220,
-                                          child: _IngredientName(
-                                              ingredients[index]['name'])),
-                                      SizedBox(
-                                          width: 75,
-                                          child: _IngredientQuantity(
-                                              ingredients[index]['quantity']
-                                                  .round())),
-                                      SizedBox(
-                                        width: 35,
-                                      ),
-                                      SizedBox(
-                                          width: 40,
-                                          child: Icon(Icons.arrow_forward_ios,
-                                              color: Colors.grey))
-                                    ],
-                                  )),
-                            ),
-                          );
-                        },
-                        itemCount: ingredients.length,
-                      ),
-                      ingredients.length == 0
-                          ? Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 0, bottom: 15, left: 35.0, right: 15.0),
-                              child: Text(
-                                  'The recipe has no ingredients.\nTap the + button to add an ingredient.',
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.red[600])))
-                          : Container(),
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.04,
-                          color: Colors.grey[300]),
-                      Container(
-                        color: Colors.grey[300],
-                        child: Text(
-                          '  Options',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                          color: Colors.grey[300]),
-                      _OptionButton(Colors.grey, 15.0, 0.0, 'Add ingredient',
-                          Icon(Icons.add, size: 30), () {
-                        Navigator.push(
+                    ),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                        color: Colors.grey[300]),
+                    _OptionButton(Colors.grey, 15.0, 0.0, 'Add ingredient',
+                        Icon(Icons.add, size: 30), () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Foodchoice(
+                                widget._recipeid, widget._recipename)),
+                      );
+                    }),
+                    _OptionButton(
+                        Colors.transparent,
+                        0.0,
+                        15.0,
+                        'Compare recipe',
+                        Icon(Icons.compare_arrows, size: 30), () {
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Foodchoice(
-                                  widget._recipeid, widget._recipename)),
-                        );
-                      }),
-                      _OptionButton(
-                          Colors.transparent,
-                          0.0,
-                          15.0,
-                          'Compare recipe',
-                          Icon(Icons.compare_arrows, size: 30), () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CompareList(
-                                    widget._recipeid, widget._recipename)));
-                      }),
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                          color: Colors.grey[300]),
-                      _OptionButton(
-                        Colors.grey,
-                        15.0,
-                        0.0,
-                        'Edit recipe name',
-                        Icon(Icons.edit, size: 30),
-                        () {
-                          _editDialog();
-                        },
-                      ),
-                      _OptionButton(Colors.transparent, 0.0, 15.0,
-                          'Delete recipe', Icon(Icons.delete, size: 30), () {
-                        showCupertinoModalPopup(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              CupertinoActionSheet(
-                                  actions: <Widget>[
-                                CupertinoActionSheetAction(
-                                  child: Text('Delete ' + widget._recipename,
-                                      style: TextStyle(color: Colors.red)),
-                                  onPressed: () {
-                                    DataProvider.deleteRecipe(widget._recipeid);
+                              builder: (context) => CompareList(
+                                  widget._recipeid, widget._recipename)));
+                    }),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                        color: Colors.grey[300]),
+                    _OptionButton(
+                      Colors.grey,
+                      15.0,
+                      0.0,
+                      'Edit recipe name',
+                      Icon(Icons.edit, size: 30),
+                      () {
+                        _editDialog();
+                      },
+                    ),
+                    _OptionButton(Colors.transparent, 0.0, 15.0,
+                        'Delete recipe', Icon(Icons.delete, size: 30), () {
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (BuildContext context) => CupertinoActionSheet(
+                            actions: <Widget>[
+                              CupertinoActionSheetAction(
+                                child: Text('Delete ' + widget._recipename,
+                                    style: TextStyle(color: Colors.red)),
+                                onPressed: () {
+                                  DataProvider.deleteRecipe(widget._recipeid);
 
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LibraryList()),
-                                    );
-                                  },
-                                ),
-                              ],
-                                  cancelButton: CupertinoActionSheetAction(
-                                    child: const Text('Cancel'),
-                                    isDefaultAction: true,
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Cancel');
-                                    },
-                                  )),
-                        );
-                      }),
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.12,
-                          color: Colors.grey[300]),
-                    ],
-                  );
-                }
-                return Center(child: CircularProgressIndicator());
-              },
-            ),
-            floatingActionButton: Stack(
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LibraryList()),
+                                  );
+                                },
+                              ),
+                            ],
+                            cancelButton: CupertinoActionSheetAction(
+                              child: const Text('Cancel'),
+                              isDefaultAction: true,
+                              onPressed: () {
+                                Navigator.pop(context, 'Cancel');
+                              },
+                            )),
+                      );
+                    }),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.12,
+                        color: Colors.grey[300]),
+                  ],
+                );
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+/*            floatingActionButton: Stack(
               children: <Widget>[
                 Padding(
                     padding: EdgeInsets.only(left: 31),
@@ -395,7 +394,8 @@ class ShowIngredientsState extends State<ShowIngredients> {
                           )),
                     )),
               ],
-            )));
+            )*/
+        ));
   }
 }
 
@@ -416,16 +416,16 @@ class _IngredientName extends StatelessWidget {
 }
 
 class _IngredientQuantity extends StatelessWidget {
-  final int _recipeid;
+  final int _quantity;
 
-  _IngredientQuantity(this._recipeid);
+  _IngredientQuantity(this._quantity);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '$_recipeid' + ' g',
+      '$_quantity' + ' g',
       textAlign: TextAlign.right,
-      style: TextStyle(color: Colors.grey[800], fontSize: 16),
+      style: TextStyle(color: Colors.grey[600], fontSize: 18),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );

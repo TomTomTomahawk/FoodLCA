@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ingredient_saver.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Foodchoice extends StatelessWidget {
   final int _recipeid;
@@ -150,6 +151,34 @@ class Vegetables extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text("Select vegetable"),
+          backgroundColor: Color(0xFF162A49),
+        ),
+        backgroundColor: Colors.grey[100],
+        body: StreamBuilder(
+            stream: Firestore.instance.collection('vegetables').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return const Text('Loading...');
+              return ListView.builder(
+                  itemExtent: 80.0,
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, index) =>
+                      Text('hello'));
+            }));
+  }
+}
+
+/*
+class Vegetables extends StatelessWidget {
+  final int _recipeid;
+  final String _recipename;
+
+  Vegetables(this._recipeid, this._recipename);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
         title: Text("Select vegetable"),
         backgroundColor: Color(0xFF162A49),
@@ -177,7 +206,7 @@ class Vegetables extends StatelessWidget {
     );
   }
 }
-
+*/
 class Meatandfish extends StatelessWidget {
   final int _recipeid;
   final String _recipename;
