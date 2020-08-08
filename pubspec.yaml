@@ -17,6 +17,9 @@ environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
+
+  cloud_firestore: ^0.13.7
+
   flutter:
     sdk: flutter
 
@@ -54,6 +57,14 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: FiraSans
+      fonts:
+        - asset: fonts/FiraSans-Regular.ttf
+        - asset: fonts/FiraSans-LightItalic.ttf
+          style: italic
+        - asset: fonts/FiraSans-Bold.ttf
+          weight: 700
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -61,24 +72,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-  - images/board6.jpg
-  - images/board7.jpg
-  - images/board8.jpg
-  - images/board9.jpg
-  - images/board10.jpg
-  - images/board11.jpg
-  - images/board12.jpg
-  - images/board13.jpg
-  - images/board14.jpg
-  - images/board15.jpeg
-  - images/board16.jpeg
-
-  - images/nature1.jpg
-  - images/spices1.jpg
-  - images/spices2.jpg
-  - images/spices3.jpeg
-  - images/spices4.jpeg
+  #assets:
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
