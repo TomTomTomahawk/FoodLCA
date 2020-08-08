@@ -105,7 +105,7 @@ class CompareChartCalorieState extends State<CompareChartCalorie> {
                 i <=
                     (max(ingredients_sorted1.length,
                             ingredients_sorted2.length) ~/
-                        10);
+                        7);
                 i++) {
               colors.add(charts.ColorUtil.fromDartColor(Colors.purple[900]));
               colors.add(charts.ColorUtil.fromDartColor(Colors.indigo[900]));
@@ -115,14 +115,30 @@ class CompareChartCalorieState extends State<CompareChartCalorie> {
               colors.add(charts.ColorUtil.fromDartColor(Colors.green[500]));
               colors
                   .add(charts.ColorUtil.fromDartColor(Colors.lightGreen[300]));
-              colors.add(charts.ColorUtil.fromDartColor(Colors.yellow[400]));
-              colors.add(charts.ColorUtil.fromDartColor(Colors.orange[400]));
-              colors.add(charts.ColorUtil.fromDartColor(Colors.red[600]));
+            }
+
+            var colors2 = [];
+
+            for (var i = 0;
+                i <=
+                    (max(ingredients_sorted1.length,
+                            ingredients_sorted2.length) ~/
+                        7);
+                i++) {
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.pink[200]));
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.pink[900]));
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.red[900]));
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.orange[900]));
+              colors2
+                  .add(charts.ColorUtil.fromDartColor(Colors.deepOrangeAccent));
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.orange[400]));
+
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.amber[300]));
             }
 
             List<charts.Series<OrdinalImpacts, String>> datacalorie = [];
 
-                        if (ingredients_sorted1.length > ingredients_sorted2.length) {
+            if (ingredients_sorted1.length > ingredients_sorted2.length) {
               for (var i = 0; i < ingredients_sorted1.length; i++) {
                 datacalorie.add(new charts.Series<OrdinalImpacts, String>(
                   id: truncateWithEllipsis(11, ingredients_sorted1[i]['name']),
@@ -152,7 +168,7 @@ class CompareChartCalorieState extends State<CompareChartCalorie> {
                   domainFn: (OrdinalImpacts sales, _) => sales.recipe,
                   measureFn: (OrdinalImpacts sales, _) => sales.impact,
                   colorFn: (_, __) =>
-                      colors[ingredients_sorted2.length - i - 1],
+                      colors2[ingredients_sorted2.length - i - 1],
                   data: [
                     new OrdinalImpacts(
                         truncateWithEllipsis(8, widget._comparerrecipename) +
@@ -173,7 +189,7 @@ class CompareChartCalorieState extends State<CompareChartCalorie> {
                   domainFn: (OrdinalImpacts sales, _) => sales.recipe,
                   measureFn: (OrdinalImpacts sales, _) => sales.impact,
                   colorFn: (_, __) =>
-                      colors[ingredients_sorted2.length - i - 1],
+                      colors2[ingredients_sorted2.length - i - 1],
                   data: [
                     new OrdinalImpacts(
                         truncateWithEllipsis(8, widget._comparerrecipename) +
@@ -248,82 +264,12 @@ class CompareChartCalorieState extends State<CompareChartCalorie> {
                               charts.BehaviorPosition.bottom,
                               charts.OutsideJustification.middleDrawArea),
                         ),
+                  (ingredients_sorted1.length + ingredients_sorted2.length) <=
+                          12
+                      ? Container()
+                      : Container(
+                          height: MediaQuery.of(context).size.height * 0.06),
                 ]));
-/*
-            return ListView(
-              padding: const EdgeInsets.fromLTRB(0, 3, 0, 75),
-              children: <Widget>[
-                Card(
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(0.0),
-                    side: BorderSide(
-                      color: Colors.black,
-                      width: 0.0,
-                    ),
-                  ),
-                  color: Colors.white,
-                  child: Column(children: <Widget>[
-                    Container(height: 10),
-                    Text(
-                      'Calories',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Container(height: 10),
-                  ]),
-                ),
-                SizedBox(
-                    width: 200.0,
-                    height: 500.0,
-                    child: Card(
-                        shape: ContinuousRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 0.0,
-                          ),
-                        ),
-                        color: Colors.white,
-                        child: GroupedStackedBarChart(
-                            datacalorie,
-                            // Disable animations for image tests.
-                            'Calories',
-                            1,
-                            12,
-                            charts.BehaviorPosition.end,
-                            charts.OutsideJustification.start))),
-                Card(
-                    shape: ContinuousRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0),
-                      side: BorderSide(
-                        color: Colors.black,
-                        width: 0.0,
-                      ),
-                    ),
-                    color: Colors.white,
-                    child: ExpansionTile(
-                        title: Text('More details',
-                            style: TextStyle(color: Colors.black)),
-                        children: <Widget>[
-                          for (var i = 0; i < ingredients.length; i++)
-                            new ListTile(
-                                title: Text(ingredients_sortedcalorie[i]
-                                        ['name'] +
-                                    ': ' +
-                                    ((ingredients_sortedcalorie[i]['quantity'] /
-                                                1000) *
-                                            ingredients_sortedcalorie[i]
-                                                ['calorie_intensity'])
-                                        .toString() +
-                                    ' calories ' +
-                                    '(${reciperetriever(i)})'))
-                        ])),
-                Container(
-                  height: 50,
-                  color: Colors.transparent,
-                ),
-              ],
-            );*/
           }),
     );
   }

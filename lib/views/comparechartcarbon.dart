@@ -106,7 +106,7 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
                 i <=
                     (max(ingredients_sorted1.length,
                             ingredients_sorted2.length) ~/
-                        10);
+                        7);
                 i++) {
               colors.add(charts.ColorUtil.fromDartColor(Colors.purple[900]));
               colors.add(charts.ColorUtil.fromDartColor(Colors.indigo[900]));
@@ -116,9 +116,24 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
               colors.add(charts.ColorUtil.fromDartColor(Colors.green[500]));
               colors
                   .add(charts.ColorUtil.fromDartColor(Colors.lightGreen[300]));
-              colors.add(charts.ColorUtil.fromDartColor(Colors.yellow[400]));
-              colors.add(charts.ColorUtil.fromDartColor(Colors.orange[400]));
-              colors.add(charts.ColorUtil.fromDartColor(Colors.red[600]));
+            }
+            var colors2 = [];
+
+            for (var i = 0;
+                i <=
+                    (max(ingredients_sorted1.length,
+                            ingredients_sorted2.length) ~/
+                        7);
+                i++) {
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.pink[200]));
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.pink[900]));
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.red[900]));
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.orange[900]));
+              colors2
+                  .add(charts.ColorUtil.fromDartColor(Colors.deepOrangeAccent));
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.orange[400]));
+
+              colors2.add(charts.ColorUtil.fromDartColor(Colors.amber[300]));
             }
 
             List<charts.Series<OrdinalImpacts, String>> datacarbon = [];
@@ -154,7 +169,7 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
                   domainFn: (OrdinalImpacts sales, _) => sales.recipe,
                   measureFn: (OrdinalImpacts sales, _) => sales.impact,
                   colorFn: (_, __) =>
-                      colors[ingredients_sorted2.length - i - 1],
+                      colors2[ingredients_sorted2.length - i - 1],
                   data: [
                     new OrdinalImpacts(
                         truncateWithEllipsis(8, widget._comparerrecipename) +
@@ -176,7 +191,7 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
                   domainFn: (OrdinalImpacts sales, _) => sales.recipe,
                   measureFn: (OrdinalImpacts sales, _) => sales.impact,
                   colorFn: (_, __) =>
-                      colors[ingredients_sorted2.length - i - 1],
+                      colors2[ingredients_sorted2.length - i - 1],
                   data: [
                     new OrdinalImpacts(
                         truncateWithEllipsis(8, widget._comparerrecipename) +
@@ -232,7 +247,7 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
                           width: MediaQuery.of(context).size.width,
                           child: GroupedStackedBarChart(
                               datacarbon,
-                              'kg-CO2-eq',
+                              'kg-CO\u2082-eq',
                               1,
                               12,
                               charts.BehaviorPosition.end,
@@ -247,13 +262,18 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
                           width: MediaQuery.of(context).size.width,
                           child: GroupedStackedBarChart(
                               datacarbon,
-                              'kg-CO2-eq',
+                              'kg-CO\u2082-eq',
                               2,
                               max(ingredients_sorted1.length,
                                   ingredients_sorted2.length),
                               charts.BehaviorPosition.bottom,
                               charts.OutsideJustification.middleDrawArea),
                         ),
+                  (ingredients_sorted1.length + ingredients_sorted2.length) <=
+                          12
+                      ? Container()
+                      : Container(
+                          height: MediaQuery.of(context).size.height * 0.06),
                 ]));
           }),
     );

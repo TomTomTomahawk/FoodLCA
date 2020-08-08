@@ -104,14 +104,14 @@ class ChartCarbonState extends State<ChartCarbon> {
             return (ingredients_sorted.length) <= 12
                 ? GroupedStackedBarChart(
                     datacarbon,
-                    'kg-CO2-eq',
+                    'kg-CO\u2082-eq',
                     1,
                     12,
                     charts.BehaviorPosition.end,
                     charts.OutsideJustification.start)
                 : GroupedStackedBarChart(
                     datacarbon,
-                    'kg-CO2-eq',
+                    'kg-CO\u2082-eq',
                     2,
                     (ingredients_sorted.length / 2).round(),
                     charts.BehaviorPosition.bottom,

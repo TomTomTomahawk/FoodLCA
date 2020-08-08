@@ -113,14 +113,14 @@ class ChartCarbonCalorieState extends State<ChartCarbonCalorie> {
             return (ingredients_sorted.length) <= 12
                 ? GroupedStackedBarChart(
                     datacarboncalorie,
-                    'g-CO2-eq per kcal',
+                    'g-CO\u2082-eq per kcal',
                     1,
                     12,
                     charts.BehaviorPosition.end,
                     charts.OutsideJustification.start)
                 : GroupedStackedBarChart(
                     datacarboncalorie,
-                    'g-CO2-eq per kcal',
+                    'g-CO\u2082-eq per kcal',
                     2,
                     (ingredients_sorted.length / 2).round(),
                     charts.BehaviorPosition.bottom,

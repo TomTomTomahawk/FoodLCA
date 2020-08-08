@@ -26,13 +26,13 @@ class GroupedStackedBarChart extends StatelessWidget {
               horizontalFirst: false,
               entryTextStyle: charts.TextStyleSpec(
                   color: charts.MaterialPalette.black,
-                  //fontFamily: 'Georgia',
+                  fontFamily: 'FiraSans',
                   fontSize: 18),
             ),
             new charts.ChartTitle(ylabel,
                 behaviorPosition: charts.BehaviorPosition.start,
                 titleStyleSpec: charts.TextStyleSpec(
-                    fontSize: 18, color: charts.MaterialPalette.black),
+                    fontSize: 18, fontFamily: 'FiraSans', color: charts.MaterialPalette.black),
                 titleOutsideJustification:
                     charts.OutsideJustification.middleDrawArea)
           ],
@@ -43,6 +43,7 @@ class GroupedStackedBarChart extends StatelessWidget {
                   // Tick and Label styling here.
                   labelStyle: new charts.TextStyleSpec(
                       fontSize: 18, // size in Pts.
+                      fontFamily: 'FiraSans',
                       color: charts.MaterialPalette.black),
 
                   // Change the line colors to match text color.
@@ -56,6 +57,7 @@ class GroupedStackedBarChart extends StatelessWidget {
                   // Tick and Label styling here.
                   labelStyle: new charts.TextStyleSpec(
                       fontSize: 18, // size in Pts.
+                      fontFamily: 'FiraSans',
                       color: charts.MaterialPalette.black),
 
                   // Change the line colors to match text color.
