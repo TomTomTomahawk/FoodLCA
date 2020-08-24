@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "556091129190",
+    "firebase_url": "https://foodlca.firebaseio.com",
+    "project_id": "foodlca",
+    "storage_bucket": "foodlca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556091129190:android:c60ca9e51d3590456e5ca7",
+        "android_client_info": {
+          "package_name": "com.example.foodlca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556091129190-9s0m9om9enjfgkv56p0pm0gs6csov8j0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB84KyUsCoBIRRoNA1NaPp_oQkuzVHfVuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556091129190-9s0m9om9enjfgkv56p0pm0gs6csov8j0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "556091129190-lvgbmv4jukip0e33qd00g8pia89h82cp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodLCA"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
