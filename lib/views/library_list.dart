@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foodlca/providers/data_provider.dart';
 import 'ingredient_list.dart';
 
-
 //https://www.pexels.com/photo/fruits-eating-food-on-wood-326268/
 
 class LibraryList extends StatefulWidget {
@@ -54,11 +53,11 @@ class LibraryListState extends State<LibraryList> {
                                 hintText: 'Recipe name',
                                 fillColor: Colors.white,
                                 filled: true,
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(width: 2.0, color: Colors.transparent),
                                 ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(width: 2.0, color: Colors.blue),
                                 ),
                               ),
                             ),
@@ -77,7 +76,7 @@ class LibraryListState extends State<LibraryList> {
                                     recipeid = snapshot.data + 1;
                                   }
                                   DataProvider.insertRecipe({
-                                    'name': recipename,
+                                    'name': recipename==''?'unnamed recipe':recipename,
                                     'draft': 1,
                                     'id': recipeid, //snapshot.data +1,
                                   });
@@ -87,7 +86,7 @@ class LibraryListState extends State<LibraryList> {
                                     MaterialPageRoute(
                                         builder: (context) => ShowIngredients(
                                             recipeid,
-                                            recipename)), //snapshot.data+1
+                                            recipename==''?'unnamed recipe':recipename)), //snapshot.data+1
                                   );
                                 }),
                                 Container(
@@ -120,9 +119,7 @@ class LibraryListState extends State<LibraryList> {
         appBar: AppBar(
           title: Text('My recipes', style: TextStyle(color: Colors.white)),
           backgroundColor: Color(0xFF162A49),
-          leading: IconButton(
-              icon: new Icon(Icons.home),
-              onPressed: () {}),
+          leading: Padding(padding: EdgeInsets.all(7),child:Image.asset('assets/images/logo6.png')),
         ),
         body: FutureBuilder(
           future: Future.wait([
@@ -210,10 +207,16 @@ class LibraryListState extends State<LibraryList> {
                         children: [
                           SizedBox(
                               height: MediaQuery.of(context).size.height * 0.4),
-                          Text(
-                              'You have no recipes.\nTap the + button to add a new recipe.',
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.grey[600]))
+                          Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.097,
+                                0,
+                                MediaQuery.of(context).size.width * 0.097,
+                                0),
+                              child: Text(
+                                  'You have no recipes.\nTap the + button to add a new recipe.',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.grey[600])))
                         ],
                       ))
                     : Container()
@@ -317,8 +320,8 @@ class _Button extends StatelessWidget {
         _text,
         style: TextStyle(color: Colors.white),
       ),
-      height: MediaQuery.of(context).size.width * 0.0973,
-      minWidth: MediaQuery.of(context).size.width * 0.243,
+      height: 40,
+      minWidth: 100,
       color: _color,
     );
   }

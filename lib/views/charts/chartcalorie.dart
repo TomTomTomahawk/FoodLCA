@@ -102,14 +102,14 @@ class ChartCalorieState extends State<ChartCalorie> {
             return (ingredients_sorted.length) <= 12
                 ? GroupedStackedBarChart(
                     datacalorie,
-                    'Calories',
+                    'kcal',
                     1,
                     12,
                     charts.BehaviorPosition.end,
                     charts.OutsideJustification.start)
                 : GroupedStackedBarChart(
                     datacalorie,
-                    'Calories',
+                    'kcal',
                     2,
                     (ingredients_sorted.length / 2).round(),
                     charts.BehaviorPosition.bottom,

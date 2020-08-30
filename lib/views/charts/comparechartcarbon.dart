@@ -258,7 +258,7 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
                           width: MediaQuery.of(context).size.width,
                           child: GroupedStackedBarChart(
                               datacarbon,
-                              'kg-CO\u2082-eq',
+                              'g-CO\u2082-eq',
                               2,
                               max(ingredients_sorted1.length,
                                   ingredients_sorted2.length),

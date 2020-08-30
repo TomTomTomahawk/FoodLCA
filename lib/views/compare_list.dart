@@ -81,8 +81,8 @@ class CompareListState extends State<CompareList> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.75,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.75,
                                     child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -110,12 +110,18 @@ class CompareListState extends State<CompareList> {
                       children: [
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.4),
-                        Text(
-                            'You have no recipes to compare ' +
-                                widget._recipename +
-                                ' with.\nCreate at least one other recipe.',
-                            style: TextStyle(
-                                fontSize: 18, color: Colors.grey[600]))
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.097,
+                                0,
+                                MediaQuery.of(context).size.width * 0.097,
+                                0),
+                            child: Text(
+                                'You have no recipes to compare ' +
+                                    widget._recipename +
+                                    ' with.\nCreate at least one other recipe.',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.grey[600])))
                       ],
                     ))
                   : Container(),

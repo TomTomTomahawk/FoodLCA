@@ -797,9 +797,16 @@ class MyRecipesState extends State<MyRecipes> {
                       children: [
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.4),
-                        Text('You have no other recipes',
-                            style: TextStyle(
-                                fontSize: 18, color: Colors.grey[600]))
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.097,
+                                0,
+                                MediaQuery.of(context).size.width * 0.097,
+                                0),
+                            child: Text(
+                                'You have no other recipes.\nCreate another recipe to add it to this one.',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.grey[600])))
                       ],
                     ))
                   : Container(),

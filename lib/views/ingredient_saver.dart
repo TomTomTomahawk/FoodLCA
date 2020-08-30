@@ -111,6 +111,10 @@ class IngredientState extends State<SaveIngredient> {
           return 'Value must be positive';
         }
 
+        if (double.parse(value) > 1000) {
+          return 'Value must be < 1000';
+        }
+
         if (value.substring(value.length - 1) == '.') {
           return 'Invalid entry';
         }
@@ -167,6 +171,10 @@ class IngredientState extends State<SaveIngredient> {
           return 'Invalid entry';
         }
 
+        if (double.parse(value) > 20000) {
+          return 'Value must be < 20000';
+        }
+
         return null;
       },
     );
@@ -220,6 +228,10 @@ class IngredientState extends State<SaveIngredient> {
           return 'Invalid entry';
         }
 
+        if (double.parse(value) > 10000) {
+          return 'Value must be < 10000';
+        }
+
         return null;
       },
     );
@@ -248,7 +260,7 @@ class IngredientState extends State<SaveIngredient> {
       ),
       backgroundColor: Colors.grey[100],
       body: Padding(
-        padding: const EdgeInsets.all(40.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.061),
         child: FutureBuilder(
             future: DataProvider.getRecipeMax(),
             builder: (context, snapshot) {
@@ -309,6 +321,7 @@ class IngredientState extends State<SaveIngredient> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
+                            Container(),
                             _Button('Save', Colors.green[900], () {
                               final name = _nameController.text;
                               final carbonintensity =
@@ -319,6 +332,7 @@ class IngredientState extends State<SaveIngredient> {
                               if (!_formKey.currentState.validate()) {
                                 return;
                               }
+
                               if (widget?.ingredientMode ==
                                   IngredientMode.Adding) {
                                 DataProvider.insertIngredient({
@@ -347,9 +361,6 @@ class IngredientState extends State<SaveIngredient> {
                                         widget._recipename)),
                               );
                             }),
-                            Container(
-                              height: 16.0,
-                            ),
                             _Button('Cancel', Colors.grey, () {
                               Navigator.push(
                                 context,
@@ -361,9 +372,9 @@ class IngredientState extends State<SaveIngredient> {
                             }),
                             widget.ingredientMode == IngredientMode.Editing
                                 ? Padding(
-                                    padding: const EdgeInsets.only(left: 6.0),
-                                    child:
-                                        _Button('Delete', Colors.red[600], () async {
+                                    padding: const EdgeInsets.all(0),
+                                    child: _Button('Delete', Colors.red[600],
+                                        () async {
                                       await DataProvider.deleteIngredient(
                                           widget.ingredient['id']);
                                       Navigator.push(
@@ -407,8 +418,8 @@ class _Button extends StatelessWidget {
         _text,
         style: TextStyle(color: Colors.white),
       ),
-      height: MediaQuery.of(context).size.width*0.0973,
-      minWidth: MediaQuery.of(context).size.width*0.243,
+      height: 40,
+      minWidth: 100,
       color: _color,
     );
   }

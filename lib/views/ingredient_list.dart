@@ -13,7 +13,6 @@ import 'feedback.dart';
 import 'privacypolicy.dart';
 import 'methodology.dart';
 
-
 class ShowIngredients extends StatefulWidget {
   final int _recipeid;
   final String _recipename;
@@ -60,11 +59,12 @@ class ShowIngredientsState extends State<ShowIngredients> {
                       hintText: 'Recipe name',
                       fillColor: Colors.white,
                       filled: true,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 2.0, color: Colors.transparent),
                       ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2.0, color: Colors.blue),
                       ),
                     ),
                   ),
@@ -159,7 +159,7 @@ class ShowIngredientsState extends State<ShowIngredients> {
                     ),
                     _SummaryTile(
                         ingredients.length == 0
-                            ? Text('Add ingredients to visualize impacts',
+                            ? Text('Add ingredients to see charts',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 4,
                                 style: TextStyle(
@@ -183,7 +183,7 @@ class ShowIngredientsState extends State<ShowIngredients> {
                         'g-CO\u2082-eq'),
                     _SummaryTile(
                         ingredients.length == 0
-                            ? Text('Add ingredients to visualize impacts',
+                            ? Text('Add ingredients to see charts',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 4,
                                 style: TextStyle(
@@ -207,7 +207,7 @@ class ShowIngredientsState extends State<ShowIngredients> {
                         'kcal'),
                     _SummaryTile(
                         ingredients.length == 0
-                            ? Text('Add ingredients to visualize impacts',
+                            ? Text('Add ingredients to see charts',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 4,
                                 style: TextStyle(
@@ -301,15 +301,20 @@ class ShowIngredientsState extends State<ShowIngredients> {
                             child: Text(
                                 'The recipe has no ingredients.\nTap the + button to add an ingredient.',
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 4,
+                                maxLines: 5,
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.red[600])))
                         : Container(),
                     Container(
-                        height: MediaQuery.of(context).size.height * 0.04,
-                        color: Colors.grey[300]),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0, color: Colors.grey[300]),
+                          color: Colors.grey[300]),
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
                     Container(
-                      color: Colors.grey[300],
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0, color: Colors.grey[300]),
+                          color: Colors.grey[300]),
                       child: Text(
                         '  Options',
                         textAlign: TextAlign.left,
@@ -322,8 +327,11 @@ class ShowIngredientsState extends State<ShowIngredients> {
                       ),
                     ),
                     Container(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                        color: Colors.grey[300]),
+                      height: MediaQuery.of(context).size.height * 0.02,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0, color: Colors.grey[300]),
+                          color: Colors.grey[300]),
+                    ),
                     _OptionButton(Colors.grey, 15.0, 0.0, 'Add ingredient',
                         Icon(Icons.add, size: 30), () {
                       Navigator.push(
@@ -346,8 +354,11 @@ class ShowIngredientsState extends State<ShowIngredients> {
                                   widget._recipeid, widget._recipename)));
                     }),
                     Container(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                        color: Colors.grey[300]),
+                      height: MediaQuery.of(context).size.height * 0.02,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0, color: Colors.grey[300]),
+                          color: Colors.grey[300]),
+                    ),
                     _OptionButton(
                       Colors.grey,
                       15.0,
@@ -388,8 +399,11 @@ class ShowIngredientsState extends State<ShowIngredients> {
                       );
                     }),
                     Container(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                        color: Colors.grey[300]),
+                      height: MediaQuery.of(context).size.height * 0.02,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0, color: Colors.grey[300]),
+                          color: Colors.grey[300]),
+                    ),
                     _OptionButton(
                       Colors.grey,
                       15.0,
@@ -419,7 +433,7 @@ class ShowIngredientsState extends State<ShowIngredients> {
                       },
                     ),
                     _OptionButton(
-                      Colors.grey,
+                      Colors.transparent,
                       0.0,
                       15.0,
                       'Give feedback',
@@ -433,8 +447,11 @@ class ShowIngredientsState extends State<ShowIngredients> {
                       },
                     ),
                     Container(
-                        height: MediaQuery.of(context).size.height * 0.12,
-                        color: Colors.grey[300]),
+                      height: MediaQuery.of(context).size.height * 0.12,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0, color: Colors.grey[300]),
+                          color: Colors.grey[300]),
+                    ),
                   ],
                 );
               }
@@ -549,9 +566,12 @@ class _OptionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+          border: Border.all(width: 0, color: Colors.grey[300]),
+          color: Colors.grey[300]),
       height: MediaQuery.of(context).size.height * 0.08,
       width: MediaQuery.of(context).size.width * 0.5,
-      color: Colors.grey[300],
+      /*color: Colors.grey[300],*/
       child: Padding(
         padding: const EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 20),
         child: Container(
