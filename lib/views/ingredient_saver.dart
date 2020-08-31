@@ -260,7 +260,7 @@ class IngredientState extends State<SaveIngredient> {
       ),
       backgroundColor: Colors.grey[100],
       body: Padding(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.061),
+        padding: const EdgeInsets.all(40.0),
         child: FutureBuilder(
             future: DataProvider.getRecipeMax(),
             builder: (context, snapshot) {
