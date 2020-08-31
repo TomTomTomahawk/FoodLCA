@@ -95,7 +95,7 @@ class CompareListState extends State<CompareList> {
                                         ]),
                                   ),
                                   Icon(Icons.arrow_forward_ios,
-                                      color: Colors.grey)
+                                      color: Colors.grey[700], size: 17)
                                 ])),
                       ),
                     );

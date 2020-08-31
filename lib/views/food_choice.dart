@@ -136,7 +136,7 @@ class _Ingredientitem extends StatelessWidget {
                           ]),
                     ),
                   ]),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                  Icon(Icons.arrow_forward_ios, color: Colors.grey[700], size: 17)
                 ])),
       ),
     );
@@ -184,7 +184,7 @@ class _Ingredientitem2 extends StatelessWidget {
                           ]),
                     ),
                   ]),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                  Icon(Icons.arrow_forward_ios, color: Colors.grey[700], size: 17)
                 ])),
       ),
     );
@@ -782,7 +782,7 @@ class MyRecipesState extends State<MyRecipes> {
                                         ]),
                                   ),
                                   Icon(Icons.arrow_forward_ios,
-                                      color: Colors.grey)
+                                      color: Colors.grey[700], size: 17)
                                 ])),
                       ),
                     );

@@ -54,18 +54,20 @@ class LibraryListState extends State<LibraryList> {
                                 fillColor: Colors.white,
                                 filled: true,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(width: 2.0, color: Colors.transparent),
+                                  borderSide: BorderSide(
+                                      width: 2.0, color: Colors.transparent),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(width: 2.0, color: Colors.blue),
+                                  borderSide: BorderSide(
+                                      width: 2.0, color: Colors.blue),
                                 ),
                               ),
                             ),
                             Container(
-                              height: 16.0,
+                              height: 20.0,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 _Button('Ok', Colors.green[900], () {
                                   final recipename = _nameController.text;
@@ -76,7 +78,9 @@ class LibraryListState extends State<LibraryList> {
                                     recipeid = snapshot.data + 1;
                                   }
                                   DataProvider.insertRecipe({
-                                    'name': recipename==''?'unnamed recipe':recipename,
+                                    'name': recipename == ''
+                                        ? 'unnamed recipe'
+                                        : recipename,
                                     'draft': 1,
                                     'id': recipeid, //snapshot.data +1,
                                   });
@@ -86,7 +90,9 @@ class LibraryListState extends State<LibraryList> {
                                     MaterialPageRoute(
                                         builder: (context) => ShowIngredients(
                                             recipeid,
-                                            recipename==''?'unnamed recipe':recipename)), //snapshot.data+1
+                                            recipename == ''
+                                                ? 'unnamed recipe'
+                                                : recipename)), //snapshot.data+1
                                   );
                                 }),
                                 Container(
@@ -114,140 +120,149 @@ class LibraryListState extends State<LibraryList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.grey[100],
-        appBar: AppBar(
-          title: Text('My recipes', style: TextStyle(color: Colors.white)),
-          backgroundColor: Color(0xFF162A49),
-          leading: Padding(padding: EdgeInsets.all(7),child:Image.asset('assets/images/logo6.png')),
-        ),
-        body: FutureBuilder(
-          future: Future.wait([
-            DataProvider.getLibraryList(),
-            DataProvider.getAllIngredients()
-          ]),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              final library = snapshot.data[0];
-              final allingredients = snapshot.data[1];
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+            backgroundColor: Colors.grey[100],
+            appBar: AppBar(
+              title: Text('My recipes', style: TextStyle(color: Colors.white)),
+              backgroundColor: Color(0xFF162A49),
+              leading: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: Image.asset('assets/images/logo6.png')),
+            ),
+            body: FutureBuilder(
+              future: Future.wait([
+                DataProvider.getLibraryList(),
+                DataProvider.getAllIngredients()
+              ]),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  final library = snapshot.data[0];
+                  final allingredients = snapshot.data[1];
 
-              return ListView(children: <Widget>[
-                ListView.builder(
-                  shrinkWrap: true,
-                  reverse: true,
-                  physics: ScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    var totalcarbon = 0.0;
-                    var totalcalories = 0.0;
-                    for (var i = 0; i < allingredients.length; i++) {
-                      if (allingredients[i]['recipe_id'] ==
-                          library[index]['id']) {
-                        totalcarbon = totalcarbon +
-                            allingredients[i]['quantity'] *
-                                allingredients[i]['carbon_intensity'];
-                        totalcalories = totalcalories +
-                            allingredients[i]['quantity'] *
-                                allingredients[i]['calorie_intensity'] /
-                                1000;
-                      }
-                    }
+                  return ListView(children: <Widget>[
+                    ListView.builder(
+                      shrinkWrap: true,
+                      reverse: true,
+                      physics: ScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        var totalcarbon = 0.0;
+                        var totalcalories = 0.0;
+                        for (var i = 0; i < allingredients.length; i++) {
+                          if (allingredients[i]['recipe_id'] ==
+                              library[index]['id']) {
+                            totalcarbon = totalcarbon +
+                                allingredients[i]['quantity'] *
+                                    allingredients[i]['carbon_intensity'];
+                            totalcalories = totalcalories +
+                                allingredients[i]['quantity'] *
+                                    allingredients[i]['calorie_intensity'] /
+                                    1000;
+                          }
+                        }
 
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ShowIngredients(
-                                    library[index]['id'],
-                                    library[index]['name'])));
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ShowIngredients(
+                                        library[index]['id'],
+                                        library[index]['name'])));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border(
+                                    bottom: BorderSide(color: Colors.grey))),
+                            child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 30,
+                                    bottom: 30,
+                                    left: MediaQuery.of(context).size.width *
+                                        0.0852,
+                                    right: MediaQuery.of(context).size.width *
+                                        0.0365),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.75,
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              //SizedBox(width: 20),
+                                              _RecipeName(
+                                                  library[index]['name']),
+                                              _RecipeImpact(totalcalories == 0
+                                                  ? '0.0'
+                                                  : (totalcarbon /
+                                                          totalcalories)
+                                                      .toStringAsFixed(1))
+                                            ]),
+                                      ),
+                                      Icon(Icons.arrow_forward_ios,
+                                          color: Colors.grey[700], size: 17)
+                                    ])),
+                          ),
+                        );
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border:
-                                Border(bottom: BorderSide(color: Colors.grey))),
-                        child: Padding(
-                            padding: EdgeInsets.only(
-                                top: 30,
-                                bottom: 30,
-                                left:
-                                    MediaQuery.of(context).size.width * 0.0852,
-                                right:
-                                    MediaQuery.of(context).size.width * 0.0365),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.75,
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          //SizedBox(width: 20),
-                                          _RecipeName(library[index]['name']),
-                                          _RecipeImpact(totalcalories == 0
-                                              ? '0.0'
-                                              : (totalcarbon / totalcalories)
-                                                  .toStringAsFixed(1))
-                                        ]),
-                                  ),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.grey)
-                                ])),
-                      ),
-                    );
-                  },
-                  itemCount: library.length,
-                ),
-                library.length == 0
-                    ? Center(
-                        child: Column(
-                        children: [
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.4),
-                          Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                MediaQuery.of(context).size.width * 0.097,
-                                0,
-                                MediaQuery.of(context).size.width * 0.097,
-                                0),
-                              child: Text(
-                                  'You have no recipes.\nTap the + button to add a new recipe.',
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.grey[600])))
-                        ],
-                      ))
-                    : Container()
-              ]);
-            }
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
-        floatingActionButton: Stack(
-          children: <Widget>[
-            Container(
-                height: 60.0,
-                width: 60.0,
-                child: FittedBox(
-                    child: Align(
-                  alignment: Alignment.bottomRight,
-                  //child: FloatingActionButton.extended(
-                  child: FloatingActionButton(
-                    heroTag: null,
-                    onPressed: () {
-                      _saveDialog();
-                    },
-                    //label: Text('New Recipe'),
-                    child: Icon(Icons.add, size: 35),
-                    backgroundColor: Color(0xFF162A49),
-                    /*shape: CircleBorder(
+                      itemCount: library.length,
+                    ),
+                    library.length == 0
+                        ? Center(
+                            child: Column(
+                            children: [
+                              SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4),
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.width * 0.097,
+                                      0,
+                                      MediaQuery.of(context).size.width * 0.097,
+                                      0),
+                                  child: Text(
+                                      'You have no recipes.\nTap the + button to add a new recipe.',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey[600])))
+                            ],
+                          ))
+                        : Container()
+                  ]);
+                }
+                return Center(child: CircularProgressIndicator());
+              },
+            ),
+            floatingActionButton: Stack(
+              children: <Widget>[
+                Container(
+                    height: 60.0,
+                    width: 60.0,
+                    child: FittedBox(
+                        child: Align(
+                      alignment: Alignment.bottomRight,
+                      //child: FloatingActionButton.extended(
+                      child: FloatingActionButton(
+                        heroTag: null,
+                        onPressed: () {
+                          _saveDialog();
+                        },
+                        //label: Text('New Recipe'),
+                        child: Icon(Icons.add, size: 35),
+                        backgroundColor: Color(0xFF162A49),
+                        /*shape: CircleBorder(
                     side: BorderSide(color: Colors.white.withOpacity(0.7), width: 0.8)),*/
-                  ),
-                ))),
-          ],
-        ));
+                      ),
+                    ))),
+              ],
+            )));
   }
 }
 

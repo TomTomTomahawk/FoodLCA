@@ -69,10 +69,10 @@ class ShowIngredientsState extends State<ShowIngredients> {
                     ),
                   ),
                   Container(
-                    height: 16.0,
+                    height: 20.0,
                   ),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         _Button('Save', Colors.green[900], () {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -286,7 +286,7 @@ class ShowIngredientsState extends State<ShowIngredients> {
                                             ingredients[index]['quantity']
                                                 .round())),
                                     Icon(Icons.arrow_forward_ios,
-                                        color: Colors.grey)
+                                        color: Colors.grey[700], size: 17)
                                   ],
                                 )),
                           ),
