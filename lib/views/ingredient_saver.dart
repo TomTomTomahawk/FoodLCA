@@ -260,7 +260,7 @@ class IngredientState extends State<SaveIngredient> {
       ),
       backgroundColor: Colors.grey[100],
       body: Padding(
-        padding: const EdgeInsets.all(40.0),
+        padding: const EdgeInsets.all(25.0),
         child: FutureBuilder(
             future: DataProvider.getRecipeMax(),
             builder: (context, snapshot) {
