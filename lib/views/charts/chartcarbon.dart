@@ -32,7 +32,7 @@ class ChartCarbonState extends State<ChartCarbon> {
             String truncateWithEllipsis(int cutoff, String myString) {
               return (myString.length <= cutoff)
                   ? myString
-                  : '${myString.substring(0, cutoff)}...';
+                  : '${myString.substring(0, cutoff)}.';
             }
 
             var totalcarbon = 0.0;

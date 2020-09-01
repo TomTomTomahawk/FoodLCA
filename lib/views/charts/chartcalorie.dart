@@ -32,7 +32,7 @@ class ChartCalorieState extends State<ChartCalorie> {
             String truncateWithEllipsis(int cutoff, String myString) {
               return (myString.length <= cutoff)
                   ? myString
-                  : '${myString.substring(0, cutoff)}...';
+                  : '${myString.substring(0, cutoff)}.';
             }
 
             var totalcalories = 0.0;

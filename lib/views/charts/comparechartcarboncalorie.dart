@@ -36,7 +36,14 @@ class CompareChartCarbonCalorieState extends State<CompareChartCarbonCalorie> {
             String truncateWithEllipsis(int cutoff, String myString) {
               return (myString.length <= cutoff)
                   ? myString
-                  : '${myString.substring(0, cutoff)}...';
+                  : '${myString.substring(0, cutoff)}.';
+            }
+
+            String truncateWithDot(int cutoff, String myString) {
+              return (myString.length <= cutoff)
+                  ? myString
+                  : '${myString.substring(0, cutoff)}-\n${myString.substring(cutoff, (myString.length <= 2 * cutoff) ? myString.length : 2 * cutoff)}' +
+                      '${(myString.length > 2 * cutoff) ? '.' : ''}';
             }
 
             var totalcarbon = 0.0;
@@ -160,7 +167,7 @@ class CompareChartCarbonCalorieState extends State<CompareChartCarbonCalorie> {
             charts.FillPatternType.forwardHatch,*/
                   data: [
                     new OrdinalImpacts(
-                        truncateWithEllipsis(8, widget._recipename),
+                        truncateWithDot(6, widget._recipename),
                         (ingredients_sorted1[i]['carbon_intensity'] *
                             1000 /
                             ingredients_sorted1[i]['calorie_intensity'])),
@@ -180,8 +187,7 @@ class CompareChartCarbonCalorieState extends State<CompareChartCarbonCalorie> {
                   colorFn: (_, __) => colors2[i],
                   data: [
                     new OrdinalImpacts(
-                        truncateWithEllipsis(8, widget._comparerrecipename) +
-                            '\n',
+                        truncateWithDot(6, widget._comparerrecipename),
                         (ingredients_sorted2[i]['carbon_intensity'] *
                             1000 /
                             ingredients_sorted2[i]['calorie_intensity'])),
@@ -201,8 +207,7 @@ class CompareChartCarbonCalorieState extends State<CompareChartCarbonCalorie> {
                   colorFn: (_, __) => colors2[i],
                   data: [
                     new OrdinalImpacts(
-                        truncateWithEllipsis(8, widget._comparerrecipename) +
-                            '\n',
+                        truncateWithDot(6, widget._comparerrecipename),
                         (ingredients_sorted2[i]['carbon_intensity'] *
                             1000 /
                             ingredients_sorted2[i]['calorie_intensity'])),
@@ -221,7 +226,7 @@ class CompareChartCarbonCalorieState extends State<CompareChartCarbonCalorie> {
             charts.FillPatternType.forwardHatch,*/
                   data: [
                     new OrdinalImpacts(
-                        truncateWithEllipsis(8, widget._recipename),
+                        truncateWithDot(6, widget._recipename),
                         (ingredients_sorted1[i]['carbon_intensity'] *
                             1000 /
                             ingredients_sorted1[i]['calorie_intensity'])),

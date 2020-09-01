@@ -99,17 +99,17 @@ class _CompareChartManagerState extends State<CompareChartManager> {
     });
   }
 
-  String truncateWithEllipsis(int cutoff, String myString) {
+  String truncateWithDot(int cutoff, String myString) {
               return (myString.length <= cutoff)
                   ? myString
-                  : '${myString.substring(0, cutoff)}...';
+                  : '${myString.substring(0, cutoff)}.';
             }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Comparing ' + truncateWithEllipsis(7,widget._recipename) + ' with '+ truncateWithEllipsis(7,widget._comparerrecipename)),
+        title: Text('Comparing ' + widget._recipename),
         backgroundColor: Color(0xFF162A49),
       ),
       body: buildPageView(),
