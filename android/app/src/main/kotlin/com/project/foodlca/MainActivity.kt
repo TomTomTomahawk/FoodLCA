@@ -1,4 +1,4 @@
-package com.example.foodlca
+package com.project.foodlca
 
 import io.flutter.embedding.android.FlutterActivity
 

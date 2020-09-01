@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:556091129190:android:c60ca9e51d3590456e5ca7",
+        "mobilesdk_app_id": "1:556091129190:android:bb5303931f79bb136e5ca7",
         "android_client_info": {
-          "package_name": "com.example.foodlca"
+          "package_name": "com.project.foodlca"
         }
       },
       "oauth_client": [
@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "556091129190-lvgbmv4jukip0e33qd00g8pia89h82cp.apps.googleusercontent.com",
+              "client_id": "556091129190-uc298it0kmkcn4dpgn67gff82b3pmkmi.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.foodLCA"
+                "bundle_id": "com.example.foodlca"
               }
             }
           ]
