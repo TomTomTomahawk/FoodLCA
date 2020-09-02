@@ -42,15 +42,7 @@ class CompareChartCarbonCalorieState extends State<CompareChartCarbonCalorie> {
             String truncateWithDot(int cutoff, String myString) {
               return (myString.length <= cutoff)
                   ? myString
-                  : '${myString.substring(0, myString[cutoff + 1] == ' ' ? cutoff + 1 : cutoff)}' +
-                      '${myString[cutoff] == ' ' ? '\n' : myString[cutoff + 1] == ' ' ? '\n' : '-\n'}' +
-                      '${myString.substring(myString[cutoff] == ' ' ? cutoff + 1 : myString[cutoff + 1] == ' ' ? cutoff + 2 : cutoff, (myString.length <= 2 * cutoff) ? myString.length : 2 * cutoff)}' +
-                      '${(myString[cutoff] == ' ' && myString.length > 2 * cutoff) ? myString.substring(2 * cutoff, 2 * cutoff + 1) : ''}' +
-                      '${(myString[cutoff + 1] == ' ' && myString.length > 2 * cutoff) ? myString.substring(2 * cutoff, 2 * cutoff + 1) : ''}' +
-                      '${(myString[cutoff + 1] == ' ' && myString.length > 2 * cutoff + 1) ? myString.substring(2 * cutoff + 1, 2 * cutoff + 2) : ''}' +
-                      '${(myString.length > 2 * cutoff && myString[cutoff] != ' ' && myString[cutoff + 1] != ' ') ? '.' : ''}' +
-                      '${(myString.length == (2 * cutoff) + 2 && myString[cutoff] == ' ' && myString[cutoff + 1] != ' ') ? myString.substring(2 * cutoff + 1, 2 * cutoff + 2) : (myString[cutoff] == ' ' && myString[cutoff + 1] != ' ') ? '.' : ''}' +
-                      '${(myString.length == (2 * cutoff) + 3 && myString[cutoff] != ' ' && myString[cutoff + 1] == ' ') ? myString.substring(2 * cutoff + 2, 2 * cutoff + 3) : (myString[cutoff + 1] == ' ' && myString[cutoff] != ' ') ? '.' : ''}';
+                  : '${myString.substring(0, cutoff)}.';
             }
 
             var totalcarbon = 0.0;

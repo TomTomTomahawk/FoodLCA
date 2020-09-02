@@ -43,6 +43,14 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
             String truncateWithDot(int cutoff, String myString) {
               return (myString.length <= cutoff)
                   ? myString
+                  : '${myString.substring(0, cutoff)}.';
+            }
+
+/*
+
+            String truncateWithDot(int cutoff, String myString) {
+              return (myString.length <= cutoff)
+                  ? myString
                   : '${myString.substring(0, myString[cutoff + 1] == ' ' ? cutoff + 1 : cutoff)}' +
                       '${myString[cutoff] == ' ' ? '\n' : myString[cutoff + 1] == ' ' ? '\n' : '-\n'}' +
                       '${myString.substring(myString[cutoff] == ' ' ? cutoff + 1 : myString[cutoff + 1] == ' ' ? cutoff + 2 : cutoff, (myString.length <= 2 * cutoff) ? myString.length : 2 * cutoff)}' +
@@ -54,7 +62,7 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
                       '${(myString.length == (2 * cutoff) + 3 && myString[cutoff] != ' ' && myString[cutoff + 1] == ' ') ? myString.substring(2 * cutoff + 2, 2 * cutoff + 3) : (myString[cutoff + 1] == ' ' && myString[cutoff] != ' ') ? '.' : ''}';
             }
 
-/*
+
 String truncateWithDot(int max, String text) {
 
     if (text.length <= max)
