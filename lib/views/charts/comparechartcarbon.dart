@@ -43,10 +43,46 @@ class CompareChartCarbonState extends State<CompareChartCarbon> {
             String truncateWithDot(int cutoff, String myString) {
               return (myString.length <= cutoff)
                   ? myString
-                  : '${myString.substring(0, cutoff)}-\n${myString.substring(cutoff, (myString.length <= 2 * cutoff) ? myString.length : 2 * cutoff)}' +
-                      '${(myString.length > 2 * cutoff) ? '.' : ''}';
+                  : '${myString.substring(0, myString[cutoff + 1] == ' ' ? cutoff + 1 : cutoff)}' +
+                      '${myString[cutoff] == ' ' ? '\n' : myString[cutoff + 1] == ' ' ? '\n' : '-\n'}' +
+                      '${myString.substring(myString[cutoff] == ' ' ? cutoff + 1 : myString[cutoff + 1] == ' ' ? cutoff + 2 : cutoff, (myString.length <= 2 * cutoff) ? myString.length : 2 * cutoff)}' +
+                      '${(myString[cutoff] == ' ' && myString.length > 2 * cutoff) ? myString.substring(2 * cutoff, 2 * cutoff + 1) : ''}' +
+                      '${(myString[cutoff + 1] == ' ' && myString.length > 2 * cutoff) ? myString.substring(2 * cutoff, 2 * cutoff + 1) : ''}' +
+                      '${(myString[cutoff + 1] == ' ' && myString.length > 2 * cutoff + 1) ? myString.substring(2 * cutoff + 1, 2 * cutoff + 2) : ''}' +
+                      '${(myString.length > 2 * cutoff && myString[cutoff] != ' ' && myString[cutoff + 1] != ' ') ? '.' : ''}' +
+                      '${(myString.length == (2 * cutoff) + 2 && myString[cutoff] == ' ' && myString[cutoff + 1] != ' ') ? myString.substring(2 * cutoff + 1, 2 * cutoff + 2) : (myString[cutoff] == ' ' && myString[cutoff + 1] != ' ') ? '.' : ''}' +
+                      '${(myString.length == (2 * cutoff) + 3 && myString[cutoff] != ' ' && myString[cutoff + 1] == ' ') ? myString.substring(2 * cutoff + 2, 2 * cutoff + 3) : (myString[cutoff + 1] == ' ' && myString[cutoff] != ' ') ? '.' : ''}';
             }
 
+/*
+String truncateWithDot(int max, String text) {
+
+    if (text.length <= max)
+        return text;
+
+    // Start by chopping off at the word before max
+    // This is an over-approximation due to thin-characters...
+    int end = text.lastIndexOf(' ', max);
+
+    // Just one long word. Chop it off.
+    if (end == -1)
+        return text.substring(0, max) + ".";
+
+    // Step forward as long as textWidth allows.
+    int newEnd = end;
+    do {
+        end = newEnd;
+        newEnd = text.indexOf(' ', end + 1);
+
+        // No more spaces.
+        if (newEnd == -1)
+            newEnd = text.length;
+
+    } while (text.length < max);
+
+    return text.substring(0, end) + ".";
+}
+*/
             var totalcarbon = 0.0;
             for (var i = 0; i < ingredients.length; i++) {
               totalcarbon = totalcarbon +
